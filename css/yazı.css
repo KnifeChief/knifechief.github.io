@@ -74,7 +74,7 @@ body {
     width: 350px;
     height: 350px;
     top: 70%;
-    background: rgba(255, 150, 0, 0.10); /* Görünürlüğü artırdık */
+    background: rgba(255, 150, 0, 0.10); 
     animation-duration: 35s;
     animation-delay: 4s;
 }
@@ -119,7 +119,7 @@ body {
     }
 }
 
-/* --- ORTA ALAN (FOTOĞRAF, İSİM, UNVAN) --- */
+
 .ana-icerik {
     display: flex;
     flex-direction: column;
@@ -129,16 +129,16 @@ body {
     z-index: 10;
 }
 
-/* Profil Fotoğrafı (Discord Tarzı ve Altın Sarısı Çerçeve) */
+
 .profil-fotografi {
     width: 160px;
     height: 160px;
-    border-radius: 50%; /* Tam yuvarlak yapar */
-    border: 4px solid #FFD700; /* Altın sarısı çerçeve */
-    object-fit: cover; /* Fotoğrafın çerçeveye orantılı sığmasını sağlar */
+    border-radius: 50%;
+    border: 4px solid #FFD700; 
+    object-fit: cover; 
     margin-bottom: 20px;
-    background-color: #222; /* Fotoğraf yüklenene kadar boş durmasın */
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); /* Çerçevenin etrafına hafif altın sarısı parlama */
+    background-color: #222; 
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.4); 
     
     /* Animasyon (İlk bu belirecek) */
     opacity: 0;
