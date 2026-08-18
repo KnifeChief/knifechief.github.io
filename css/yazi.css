@@ -546,7 +546,7 @@ body {
     left: 0;
     width: 100%;
     display: flex !important;
-    flex-direction: row !important; /* Asla alt alta inmez, hep yan yana durur */
+    flex-direction: row  !important; /* Asla alt alta inmez, hep yan yana durur */
     justify-content: space-between !important; /* Logo sola, hamburger sağa yapışır */
     align-items: center !important;
     padding: 15px 30px !important; /* Kenarlardan taşmayı önleyen güvenli boşluk */
@@ -574,13 +574,11 @@ body {
     gap: 20px;
 }
 
-/* Telefonda veya küçük ekranda normal metin linklerini gizleyip sadece hamburger menüyü bırakmak istersen: */
-@media screen and (max-width: 768px) {
-    .ust-menu .menu-linkleri {
-        display: none !important; /* Mobilde uzun menü yazıları yer kaplayıp logoyu patlatmasın diye gizlenir */
-    }
+    /* Yazıların ekrandan asla kaybolmaması ve her boyutta görünmesi için: */
+.ust-menu .menu-linkleri {
+    display: flex !important; 
+    gap: 15px; /* Yazılar birbirine çok yaklaşmasın diye boşluk */
 }
-
     
     .menu-linkleri a {
         font-size: 0.85rem; 
@@ -667,7 +665,7 @@ body {
     z-index: 9999; /* Her şeyin en üstünde durur */
 }
 
-/* Mini Şifre Kutusu */
+
 .modal-kutu {
     background: rgba(17, 17, 17, 0.95);
     border: 2px solid #FFD700;
@@ -796,7 +794,6 @@ body {
     transition: transform 0.4s ease-out, opacity 0.4s ease-out, border-color 0.3s, box-shadow 0.3s, color 0.3s;
 }
 
-/* Üzerine gelince Knife Chief sarısıyla parlasın */
 .baloncuk-govde:hover {
     border-color: #FFD700;
     color: #FFD700;
