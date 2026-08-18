@@ -545,28 +545,24 @@ body {
 
 @media screen and (max-width: 768px) {
     
-    /* 1. EKRAN KİLİDİNİ AÇIYORUZ (İletişim bölümünün geri gelmesi için en kritik adım) */
-    body, html {
-        height: auto;
-        min-height: 100vh;
-        overflow-y: auto; /* Mobilde aşağı kaydırmaya izin ver */
-        justify-content: flex-start; /* İçeriği merkeze kilitlemek yerine yukarıdan başlat */
+    /* Üst menüyü alt alta yığan flex-direction: column kodunu siliyoruz */
+    .ust-menu {
+        position: fixed !important; /* Ekranın tepesine sabitler */
+        top: 0;
+        left: 0;
+        width: 100%;
+        flex-direction: row !important; /* Yan yana durmasını sağlar */
+        justify-content: space-between !important; /* Logo sola, hamburger sağa yaslanır */
+        padding: 15px 20px !important; /* Mobilde kenar boşluklarını daraltır */
+        background: rgba(17, 17, 17, 0.95) !important;
+        z-index: 1000;
     }
 
-    /* 2. Üst Menüyü Düzenleme */
-    .ust-menu {
-        position: relative; /* Menüyü sabitlemekten vazgeçiyoruz ki mobilde ekranı daraltmasın */
-        flex-direction: column;
-        padding: 15px;
-        gap: 15px;
-        background: #111; /* Şeffaflığı mobilde tam siyaha çeviriyoruz */
-    }
-    
+    /* Mobilde uzun menü linklerini gizleyip sadece hamburger menüyü bırakmak istiyorsan: */
     .menu-linkleri {
-        gap: 15px;
-        flex-wrap: wrap; 
-        justify-content: center;
+        display: none; /* Eğer telefonda yazıların görünmesini istemiyorsan bunu açabilirsin */
     }
+
     
     .menu-linkleri a {
         font-size: 0.85rem; 
