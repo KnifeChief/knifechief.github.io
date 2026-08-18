@@ -1,6 +1,6 @@
 document.addEventListener('mousemove', function(e) {
     
-    // Yeni bir 'div' elementi oluşturuyoruz (bu bizim yıldızımız olacak)
+   
     const yildiz = document.createElement('div');
     yildiz.classList.add('yildiz-izi'); // CSS'teki yildiz-izi sınıfını veriyoruz[cite: 3]
     
