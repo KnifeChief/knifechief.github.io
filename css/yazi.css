@@ -390,9 +390,6 @@ body {
     }
 }
 
-/* ========================================= */
-/* --- YENİ MODERN HAKKIMDA BÖLÜMÜ --- */
-/* ========================================= */
 
 .hakkimda-bolumu {
     width: 100%;
@@ -542,26 +539,47 @@ body {
 /* ========================================= */
 /* --- MOBİL UYUM (RESPONSIVE DESIGN) --- */
 /* ========================================= */
-
-@media screen and (max-width: 768px) {
     
-    /* Üst menüyü alt alta yığan flex-direction: column kodunu siliyoruz */
-    .ust-menu {
-        position: fixed !important; /* Ekranın tepesine sabitler */
-        top: 0;
-        left: 0;
-        width: 100%;
-        flex-direction: row !important; /* Yan yana durmasını sağlar */
-        justify-content: space-between !important; /* Logo sola, hamburger sağa yaslanır */
-        padding: 15px 20px !important; /* Mobilde kenar boşluklarını daraltır */
-        background: rgba(17, 17, 17, 0.95) !important;
-        z-index: 1000;
-    }
+.ust-menu {
+    position: fixed !important; /* Ekranın tepesine çivi gibi çakar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex !important;
+    flex-direction: row !important; /* Asla alt alta inmez, hep yan yana durur */
+    justify-content: space-between !important; /* Logo sola, hamburger sağa yapışır */
+    align-items: center !important;
+    padding: 15px 30px !important; /* Kenarlardan taşmayı önleyen güvenli boşluk */
+    background: rgba(17, 17, 17, 0.95) !important;
+    backdrop-filter: blur(10px);
+    box-sizing: border-box !important;
+    z-index: 1000;
+}
 
-    /* Mobilde uzun menü linklerini gizleyip sadece hamburger menüyü bırakmak istiyorsan: */
-    .menu-linkleri {
-        display: none; /* Eğer telefonda yazıların görünmesini istemiyorsan bunu açabilirsin */
+/* Logo Yazısının Kaybolmasını Engelleyen Kısım */
+.ust-menu .logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem !important; /* Ekran küçülünce yazının taşmaması için ideal boyut */
+    font-weight: 700;
+    color: #FFD700 !important;
+    letter-spacing: 1px;
+    text-decoration: none;
+    white-space: nowrap !important; /* Yazının alt alta kırılmasını/yok olmasını kesinlikle engeller */
+}
+
+/* Sağ Tarafın (Linkler ve Hamburger) Sıkışmasını Önleme */
+.ust-menu .menu-sag-kisim {
+    display: flex !important;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Telefonda veya küçük ekranda normal metin linklerini gizleyip sadece hamburger menüyü bırakmak istersen: */
+@media screen and (max-width: 768px) {
+    .ust-menu .menu-linkleri {
+        display: none !important; /* Mobilde uzun menü yazıları yer kaplayıp logoyu patlatmasın diye gizlenir */
     }
+}
 
     
     .menu-linkleri a {
