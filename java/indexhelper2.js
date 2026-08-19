@@ -1,6 +1,6 @@
 document.addEventListener('mousemove', function(e) {
     
-   
+    // Yeni bir 'div' elementi oluşturuyoruz (bu bizim yıldızımız olacak)
     const yildiz = document.createElement('div');
     yildiz.classList.add('yildiz-izi'); // CSS'teki yildiz-izi sınıfını veriyoruz[cite: 3]
     
@@ -20,65 +20,56 @@ document.addEventListener('mousemove', function(e) {
     
 });
 
-// Sayfa yüklendiğinde Navbar'ı getiren kod
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('navbar.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('navbar-placeholder').innerHTML = data;
-        });
+// Sayfa içi bağlantılar için tek, kesintiye uğrayabilen smooth-scroll denetimi.
+// Delegasyon sayesinde sonradan yüklenen navbar bağlantıları da aynı davranışı kullanır.
+let kaydirmaAnimasyonu = null;
+let kaydirmaKimligi = 0;
+
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+
+    const linkUrl = new URL(link.href, window.location.href);
+    const ayniSayfa = linkUrl.origin === window.location.origin
+        && linkUrl.pathname === window.location.pathname;
+    const hedefID = ayniSayfa ? linkUrl.hash : '';
+    if (!hedefID || hedefID === '#') return;
+
+    const hedefBolum = document.querySelector(hedefID);
+    if (!hedefBolum) return;
+
+    e.preventDefault();
+    if (kaydirmaAnimasyonu) cancelAnimationFrame(kaydirmaAnimasyonu);
+    const buKaydirma = ++kaydirmaKimligi;
+
+    const baslangic = window.scrollY;
+    const navbar = document.querySelector('.ust-menu');
+    const navbarYuksekligi = navbar ? navbar.getBoundingClientRect().height : 0;
+    const hedef = Math.max(0, baslangic + hedefBolum.getBoundingClientRect().top - navbarYuksekligi);
+    const mesafe = Math.abs(hedef - baslangic);
+    const sure = Math.min(750, Math.max(250, mesafe * 0.45));
+    let baslangicZamani = null;
+
+    function easeInOutQuad(t) {
+        return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    }
+
+    function animasyon(simdikiZaman) {
+        // Daha yeni bir bağlantı tıklandıysa eski kare yeni animasyonun üstüne yazamaz.
+        if (buKaydirma !== kaydirmaKimligi) return;
+        if (baslangicZamani === null) baslangicZamani = simdikiZaman;
+        const ilerleme = Math.min((simdikiZaman - baslangicZamani) / sure, 1);
+        window.scrollTo(0, baslangic + (hedef - baslangic) * easeInOutQuad(ilerleme));
+
+        if (ilerleme < 1) {
+            kaydirmaAnimasyonu = requestAnimationFrame(animasyon);
+        } else {
+            kaydirmaAnimasyonu = null;
+        }
+    }
+
+    kaydirmaAnimasyonu = requestAnimationFrame(animasyon);
 });
-
-    // Sayfadaki '#' ile başlayan tüm linkleri bul
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault(); // Tarayıcının ışınlamasını durdur
-
-            const hedefID = this.getAttribute('href');
-            if (hedefID === '#') return; // Boş linkleri atla
-
-            const hedefBolum = document.querySelector(hedefID);
-            if (!hedefBolum) return;
-
-            // --- AYAR KISMI ---
-            // 1500 = 1.5 saniye demektir. Daha yavaş istersen 2000 (2 saniye) yapabilirsin.
-            const sure = 1300; 
-            
-            // Konum hesaplamaları
-            const baslangic = window.scrollY; // Şu an bulunduğumuz yer
-            const hedefY = hedefBolum.getBoundingClientRect().top; // Hedefe olan uzaklık
-            let baslangicZamani = null;
-
-            // Yumuşak hızlanma ve yavaşlama (Easing) matematiği
-            function easeInOutQuad(t) {
-                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-            }
-
-            // Animasyon Döngüsü
-            function animasyon(suankiZaman) {
-                if (baslangicZamani === null) baslangicZamani = suankiZaman;
-                const gecenZaman = suankiZaman - baslangicZamani;
-                
-                // İlerlemeyi 0 ile 1 arasında bir değere çevir
-                let ilerleme = gecenZaman / sure;
-                if (ilerleme > 1) ilerleme = 1;
-
-                // Easing fonksiyonunu uygula (Yağ gibi kayması için)
-                const easeIlerleme = easeInOutQuad(ilerleme);
-
-                // Ekranı yeni konuma kaydır
-                window.scrollTo(0, baslangic + (hedefY * easeIlerleme));
-
-                // Süre dolmadıysa animasyona devam et
-                if (gecenZaman < sure) {
-                    requestAnimationFrame(animasyon);
-                }
-            }
-
-            // Animasyonu başlat
-            requestAnimationFrame(animasyon);
-        });
-    });
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('sifre-modal');
     const girisBtn = document.getElementById('giris-yap-btn');
@@ -159,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // 2. AŞAMA: DUVAR ARKASINA IŞINLANMA (1 saniye sonra)
             setTimeout(() => {
-                // Kapsayıcıyı ekranda görünmeden hızlıca dışarı taşıyoruz
+               
                 kapsayici.style.transition = 'none';
                 if (kapsayici.classList.contains('sol-kapsayici')) {
                     kapsayici.style.transform = 'translateX(-50vw)';
@@ -167,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     kapsayici.style.transform = 'translateX(50vw)';
                 }
 
-                // Gövdeyi görünmezken eski boyutuna getiriyoruz
+                
                 govde.style.transform = 'scale(1)';
                 govde.style.opacity = '1';
 
@@ -193,21 +184,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // KİŞİSEL MENÜ (3 ÇİZGİ) İÇİN KONTROL SİSTEMİ
     document.addEventListener('click', (e) => {
-        // Tıklanan şey 3 çizgi butonu mu kontrol et
+        
         const hamburgerBtn = e.target.closest('#hamburger-btn');
         const kisiselMenu = document.getElementById('kisisel-menu');
         
         if (hamburgerBtn && kisiselMenu) {
             e.preventDefault();
-            // Butona 'aktif' (çarpı olma) sınıfını ekle/çıkar
+           
             hamburgerBtn.classList.toggle('aktif');
-            // Menüye 'goster' sınıfını ekle/çıkar
+            
             kisiselMenu.classList.toggle('goster');
+            hamburgerBtn.setAttribute('aria-expanded', kisiselMenu.classList.contains('goster'));
         } 
-        // Eğer menü açıkken boş bir yere tıklanırsa menüyü otomatik kapat
+        
         else if (kisiselMenu && kisiselMenu.classList.contains('goster') && !e.target.closest('.kisisel-menu')) {
             document.getElementById('hamburger-btn').classList.remove('aktif');
             kisiselMenu.classList.remove('goster');
+            document.getElementById('hamburger-btn').setAttribute('aria-expanded', 'false');
         }
     });
 
@@ -265,6 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+
 
 
 
