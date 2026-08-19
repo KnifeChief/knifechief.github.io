@@ -1,7 +1,7 @@
 <nav class="ust-menu">
     <div class="logo"><a href="#" id="knifechief-logo" class="logo">Knife Chief</a></div>
     
-    <!-- Sağ tarafı grupluyoruz (Normal Linkler + 3 Çizgi) -->
+
     <div class="menu-sag-kisim" style="display: flex; align-items: center; gap: 30px;">
         <ul class="menu-linkleri">
             <li><a href="index.html">Ana Sayfa</a></li>
@@ -10,12 +10,11 @@
             <li><a href="index.html#iletisim">İletişim</a></li>
         </ul>
 
-        <!-- 3 Çizgi (Hamburger) İkonu -->
-        <div class="hamburger-btn" id="hamburger-btn">
+        <button class="hamburger-btn" id="hamburger-btn" type="button" aria-label="Kişisel menüyü aç veya kapat" aria-expanded="false">
             <span></span>
             <span></span>
             <span></span>
-        </div>
+        </button>
     </div>
 
     <!-- Kişisel Linklerin Olduğu Açılır Menü (Başlangıçta gizlidir) -->
@@ -24,6 +23,7 @@
         <a href="BOŞ.html">BOŞLUK</a>
     </div>
 </nav>
+
 <script>
     const currentPage = window.location.pathname.split('/').pop();
     const navLinks = document.querySelectorAll('#nav-list .nav-link');
@@ -34,4 +34,3 @@
         }
     });
 </script>
-
