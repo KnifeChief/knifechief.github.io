@@ -34,10 +34,10 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    z-index: 0; /* Siyah arka planın arkasında kalmaması için 0 yaptık */
+    z-index: 0; 
     margin: 0;
     padding: 0;
-    pointer-events: none; /* Dairelerin butonlara tıklamanı engellemesini önler */
+    pointer-events: none; 
 }
 
 .arkaplan-daireleri li {
@@ -966,6 +966,9 @@ body {
     justify-content: space-between;
     width: 26px;
     height: 18px;
+    padding: 0;
+    border: 0;
+    background: transparent;
     cursor: pointer;
     z-index: 1001; /* Her şeyin üstünde tıklanabilir olsun */
 }
@@ -1199,3 +1202,235 @@ body {
             0% { transform: translateY(100vh) rotate(20deg); opacity: 0; }
             100% { transform: translateY(-50%) rotate(20deg); opacity: 1; }
         }
+
+/* ========================================= */
+/* --- EKRAN KÜÇÜLDÜKÇE UYUM KURALLARI --- */
+/* ========================================= */
+
+/* Büyük ekranlarda içerik kenarlara yapışmadan akıcı biçimde daralır. */
+.hakkimda-grid,
+.projeler-grid {
+    width: min(100%, 1200px);
+}
+
+/* Hakkımda metni tek bir şiir bloğu gibi ortalanır; çalışma kartı onu takip eder. */
+.hakkimda-grid {
+    grid-template-columns: minmax(0, 640px);
+    justify-content: center;
+    gap: 24px;
+}
+
+.hakkimda-sol,
+.hakkimda-sag {
+    align-items: center;
+    text-align: center;
+}
+
+.hakkimda-metin {
+    max-width: 600px;
+    margin: 0 auto 14px;
+}
+
+.uretim-baslik { margin: 8px 0 14px; }
+.hakkimda-sag,
+.kutu-kapsayici { width: 100%; }
+
+.uretim-kutusu {
+    width: min(100%, 560px);
+    margin: 0 auto;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+/* Balonlar içerik katmanının arkasında kalır; orta genişlikte gizlenerek metne girmez. */
+.balon-kapsayici { z-index: 1; }
+
+@media screen and (max-width: 900px) {
+    .balon-kapsayici { display: none; }
+}
+
+@media screen and (max-width: 1024px) {
+    .hakkimda-grid { gap: 48px; }
+    .hakkimda-bolumu,
+    .projeler-bolumu,
+    .iletisim-bolumu { padding: 88px 28px; }
+}
+
+@media screen and (max-width: 768px) {
+    .ilk-ekran {
+        min-height: 100svh;
+        height: auto;
+        padding: 112px 20px 145px;
+        box-sizing: border-box;
+    }
+
+    /* Referanstaki gibi: logo üstte, bağlantılar ve menü düğmesi altta. */
+    .ust-menu {
+        position: fixed;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        padding: 7px 18px 16px;
+        background: rgba(17, 17, 17, 0.94);
+    }
+
+    .ust-menu .logo { font-size: 1.35rem; }
+
+    .menu-sag-kisim {
+        width: 100%;
+        justify-content: space-between;
+        gap: 16px !important;
+    }
+
+    .menu-linkleri {
+        min-width: 0;
+        flex: 1;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .menu-linkleri a {
+        font-size: 0.72rem;
+        letter-spacing: 0.7px;
+        white-space: nowrap;
+    }
+
+    .hamburger-btn {
+        flex: 0 0 26px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+    }
+
+    .kisisel-menu {
+        top: 88px;
+        right: 18px;
+        min-width: min(200px, calc(100vw - 36px));
+    }
+
+    .ana-icerik { margin-top: 0; }
+    .profil-fotografi {
+        width: clamp(108px, 31vw, 130px);
+        height: clamp(108px, 31vw, 130px);
+    }
+    .isim-animasyonu { font-size: clamp(2.8rem, 12vw, 3.5rem); }
+
+    .hakkimda-link,
+    .projeler-link {
+        width: min(100%, 250px);
+        box-sizing: border-box;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+    }
+
+    .iletisim-alani {
+        top: auto;
+        bottom: 25px !important;
+        padding: 0 20px !important;
+        box-sizing: border-box;
+    }
+
+    .hakkimda-bolumu,
+    .projeler-bolumu,
+    .iletisim-bolumu { padding: 76px 20px; }
+
+    .hakkimda-grid { gap: 36px; }
+    .hakkimda-ana-baslik,
+    .bolum-ana-baslik { font-size: clamp(2rem, 9vw, 2.5rem); }
+    .hakkimda-metin { font-size: 0.92rem; }
+    .uretim-kutusu { padding: 20px; }
+    .projeler-grid { grid-template-columns: 1fr; }
+    .proje-karti { min-width: 0; }
+    .iletisim-kapsayici {
+        padding: 24px;
+        box-sizing: border-box;
+    }
+    .modal-kutu,
+    .admin-kutu {
+        width: calc(100% - 32px);
+        box-sizing: border-box;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .ust-menu { padding-inline: 12px; }
+    .menu-sag-kisim { gap: 10px !important; }
+    .menu-linkleri { gap: 6px; }
+    .menu-linkleri a { font-size: 0.63rem; letter-spacing: 0.35px; }
+    .hakkimda-bolumu,
+    .projeler-bolumu,
+    .iletisim-bolumu { padding-inline: 16px; }
+    .iletisim-kapsayici { padding: 20px 16px; }
+}
+
+/* Hakkımda balonları dar ekranlarda da sağ ve solda kalır; metin için ayrı alan ayrılır. */
+@media screen and (max-width: 900px) {
+    .hakkimda-bolumu { padding-inline: 96px; }
+    .hakkimda-grid { width: 100%; }
+    .balon-kapsayici { display: block; }
+    .sol-kapsayici { left: 16px; }
+    .sag-kapsayici { right: 16px; }
+    .baloncuk-govde {
+        width: 64px;
+        height: 64px;
+        font-size: 0.78rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .hakkimda-bolumu { padding-inline: 68px; }
+    .sol-kapsayici { left: 10px; }
+    .sag-kapsayici { right: 10px; }
+    .baloncuk-govde {
+        width: 48px;
+        height: 48px;
+        font-size: 0.65rem;
+    }
+}
+
+/* Orta genişlikte ana ekran kısayolları birbirinden bağımsız konumlanır. */
+@media screen and (min-width: 769px) and (max-width: 1100px) {
+    .projeler-link { left: calc(50% - 130px); }
+    .hakkimda-link { left: calc(50% + 130px); }
+}
+
+/* Ana ekrandaki bölüm bağlantıları tek bir grup olarak her zaman ortada kalır. */
+.hero-linkler {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    transform: translateX(-50%);
+}
+
+.hero-linkler .hakkimda-link,
+.hero-linkler .projeler-link {
+    position: static;
+    left: auto;
+    top: auto;
+    margin: 0;
+    transform: none;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+    .hero-linkler {
+        position: static;
+        width: 100%;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 28px;
+        transform: none;
+    }
+
+    .hero-linkler .hakkimda-link,
+    .hero-linkler .projeler-link {
+        position: static !important;
+        margin: 0 !important;
+    }
+}
