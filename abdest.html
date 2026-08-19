@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kedi Abdest</title>
     
-    <!-- Senin sitendeki fontu kullanıyoruz -->
+   
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     
-    <!-- Ana sayfanın CSS dosyası -->
+    
     <link rel="stylesheet" href="css/yazi.css">
 
     <!-- ŞİFRE MODALI -->
@@ -33,7 +33,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #111; /* Portfolyonun karanlık teması */
+            background-color: #111;
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
         }
@@ -41,8 +41,11 @@
         /* Fotoğrafı ve yazıyı tutan çerçeve */
         .kedi-cercevesi {
             position: relative;
-            width: 400px;
-            height: 400px;
+            
+            width: clamp(200px, min(52vw, calc(100svh - 304px)), 400px);
+            height: auto;
+            aspect-ratio: 1;
+            container-type: inline-size;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
@@ -50,7 +53,7 @@
             transition: all 0.4s ease;
         }
 
-        /* Başarılı olduğunda çerçevenin parlaması için */
+        
         .kedi-cercevesi.basarili {
             border-color: #00ff00;
             box-shadow: 0 0 40px rgba(0, 255, 0, 0.3);
@@ -59,18 +62,72 @@
         .kedi-foto {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Çerçeveyi tam doldurur */
-            object-position: top; /* YENİ: Odak noktasını en tepeye (şapkaya) sabitler */
+            object-fit: cover; 
+            object-position: top; 
             transition: opacity 0.3s ease;
         }
 
-        /* Fotoğrafın üstündeki tıklanabilir dev yazı */
+        .sayac-metni {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            z-index: 10;
+            transform: translateX(-50%);
+            color: #FFD700;
+            font-size: 1.25rem;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        @media screen and (max-width: 900px) {
+            .yan-kedi-kapsayici {
+                width: clamp(90px, 20vw, 160px);
+                height: clamp(90px, 20vw, 160px);
+            }
+            .sol-kedi { left: 3%; }
+            .sag-kedi { right: 3%; }
+        }
+
+        @media screen and (max-width: 600px) {
+            .yan-kedi-kapsayici {
+                width: 72px;
+                height: 72px;
+            }
+            .sayac-metni { bottom: 18px; }
+        }
+
+        
+        @media screen and (max-width: 1100px) {
+            .kedi-cercevesi {
+                width: clamp(200px, min(44vw, calc(100svh - 304px)), 340px);
+            }
+
+            .yan-kedi-kapsayici {
+                width: clamp(90px, 14vw, 120px);
+                height: clamp(90px, 14vw, 120px);
+            }
+
+            .sol-kedi { left: 4%; }
+            .sag-kedi { right: 4%; }
+        }
+
+        @media screen and (max-width: 600px) {
+            .yan-kedi-kapsayici {
+                width: 72px;
+                height: 72px;
+            }
+            .sol-kedi { left: 3%; }
+            .sag-kedi { right: 3%; }
+        }
+
+        
         .aksiyon-yazisi {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1); /* Animasyon için scale eklendi */
-            font-size: 2rem; /* Senin belirlediğin boyut */
+            transform: translate(-50%, -50%) scale(1); 
+            font-size: 2rem; 
             font-weight: 700;
             color: white;
             text-transform: uppercase;
@@ -78,11 +135,29 @@
             cursor: pointer;
             text-align: center;
             width: 100%;
+            max-width: 100%;
+            padding: 0 12px;
+            box-sizing: border-box;
             user-select: none;
             
-            /* Yazının fotoğrafta okunabilmesi için kalın siyah gölge */
+           
             text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.9), -3px -3px 15px rgba(0, 0, 0, 0.9);
             transition: color 0.2s ease;
+        }
+
+        /* Çerçeve küçüldüğünde eylem metni her zaman fotoğrafın içinde kalır. */
+        @container (max-width: 330px) {
+            .aksiyon-yazisi {
+                font-size: 1.35rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        @container (max-width: 240px) {
+            .aksiyon-yazisi {
+                font-size: 0.95rem;
+                letter-spacing: 1px;
+            }
         }
 
         /* Fareyle üzerine gelince Knife Chief sarısı olsun ve biraz büyüsün */
@@ -117,15 +192,19 @@
 
         /* Senin eklediğin başlık */
         .abdest-baslik {
-            top: 50px;
+            top: 112px;
             left: 50%;
             transform: translateX(-50%);
             position: absolute;
             color: #FFD700;
-            font-size: 2rem;
-            margin-bottom: 30px;
+            width: min(calc(100% - 40px), 720px);
+            margin: 0;
+            text-align: center;
+            line-height: 1.3;
+            font-size: clamp(1rem, 3.2vw, 2rem);
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
             transition: opacity 0.3s ease; /* Kaybolurken yumuşak gitsin */
+            z-index: 10;
         }
 
         /* --- BAŞLIK İÇİN KÜÇÜLME VE BÜYÜME ANİMASYONLARI --- */
@@ -179,7 +258,7 @@
         <!-- İLK KEDİ FOTOĞRAFI -->
         <img src="img/cat.png" alt="Kedi" class="kedi-foto" id="kedi-resmi">
         
-        <!-- TIKLANABİLİR YAZI -->
+        
         <div class="aksiyon-yazisi" id="abdest-buton">ABDEST AL</div>
     </div>
 
@@ -188,7 +267,7 @@
         <!-- SOL YAN KEDİ -->
     <div class="yan-kedi-kapsayici sol-kedi" id="sol-kedi">
         <div class="yan-kedi-govde">
-            <!-- Kendi fotoğrafının adını buraya yaz -->
+            
             <img src="img/muslimcat2.jpeg" alt="Sol Kedi">
         </div>
     </div>
@@ -196,7 +275,7 @@
     <!-- SAĞ YAN KEDİ -->
     <div class="yan-kedi-kapsayici sag-kedi" id="sag-kedi">
         <div class="yan-kedi-govde">
-            <!-- Kendi fotoğrafının adını buraya yaz -->
+            
             <img src="img/welldonecat.jpeg" alt="Sağ Kedi">
         </div>
     </div>
@@ -209,24 +288,52 @@
             const abdestButon = document.getElementById('abdest-buton');
             const cerceve = document.getElementById('cerceve');
             const istekli = document.getElementById('istekli');
+            const sayac = document.getElementById('sayac');
             
             // Müziği JS ile yakalıyoruz
             const abdestMuzik = document.getElementById('abdest-muzik');
             
             let islemTamam = false; 
-            let sifirlamaZamanlayici; 
+            let sayacAraligi;
+            const SURE_SANIYE = 5 * 60;
 
-            // Eski haline döndürme fonksiyonu
+            function sayaciGuncelle(kalanSaniye) {
+                const dakika = String(Math.floor(kalanSaniye / 60)).padStart(2, '0');
+                const saniye = String(kalanSaniye % 60).padStart(2, '0');
+                sayac.textContent = `${dakika}:${saniye}`;
+            }
+
+            function sayaciBaslat() {
+                let kalanSaniye = SURE_SANIYE;
+                clearInterval(sayacAraligi);
+                sayaciGuncelle(kalanSaniye);
+
+                sayacAraligi = setInterval(() => {
+                    kalanSaniye -= 1;
+                    sayaciGuncelle(kalanSaniye);
+
+                    if (kalanSaniye <= 0) {
+                        clearInterval(sayacAraligi);
+                        eskiHalineDon();
+                    }
+                }, 1000);
+            }
+
+            
             function eskiHalineDon() {
+                clearInterval(sayacAraligi);
                 abdestMuzik.pause();
                 abdestMuzik.currentTime = 0;
 
                 abdestButon.textContent = "ABDEST AL";
-                istekli.textContent = "Abdest Almak için tıklamak ister misin?";
+                istekli.textContent = "Cenabet gibisin! Abdest Almak için tıklamak ister misin?";
                 kediResmi.src = "img/cat.png"; 
+                sayaciGuncelle(SURE_SANIYE);
 
                 cerceve.classList.remove('basarili');
+                abdestButon.classList.remove('kucul-yok-ol');
                 abdestButon.classList.remove('buyu-yerine-gec');
+                istekli.classList.remove('baslik-kucul');
                 istekli.classList.remove('baslik-buyu');
 
                 document.getElementById('sol-kedi').classList.remove('firlat');
@@ -238,6 +345,7 @@
             abdestButon.addEventListener('click', () => {
                 if (!islemTamam) {
                     islemTamam = true; 
+                    sayaciBaslat();
                     
                     abdestButon.classList.add('kucul-yok-ol');
                     istekli.classList.add('baslik-kucul');
@@ -262,12 +370,6 @@
                         // MÜZİĞİ BAŞLAT
                         abdestMuzik.play().catch(error => console.log("Tarayıcı müzik çalmayı engelledi:", error));
 
-                        // 5 DAKİKA (300000 ms) SONRA SIFIRLA
-                        clearTimeout(sifirlamaZamanlayici);
-                        sifirlamaZamanlayici = setTimeout(eskiHalineDon, 300000);
-
-                        
-                        
                     }, 400); 
                 }
             });
