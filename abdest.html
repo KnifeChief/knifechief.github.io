@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="css/yazi.css">
 
-    <!-- ŞİFRE MODALI -->
+    
     <div id="sifre-modal" class="modal-arkaplan" style="display: none;">
         <div class="modal-kutu">
             <h3>YÖNETİCİ GİRİŞİ</h3>
@@ -38,7 +38,7 @@
             overflow: hidden;
         }
 
-        /* Fotoğrafı ve yazıyı tutan çerçeve */
+        
         .kedi-cercevesi {
             position: relative;
             
@@ -145,7 +145,7 @@
             transition: color 0.2s ease;
         }
 
-        /* Çerçeve küçüldüğünde eylem metni her zaman fotoğrafın içinde kalır. */
+        
         @container (max-width: 330px) {
             .aksiyon-yazisi {
                 font-size: 1.35rem;
@@ -160,16 +160,16 @@
             }
         }
 
-        /* Fareyle üzerine gelince Knife Chief sarısı olsun ve biraz büyüsün */
+        
         .aksiyon-yazisi:hover:not(.kucul-yok-ol):not(.buyu-yerine-gec) {
             color: #FFD700;
             transform: translate(-50%, -50%) scale(1.1);
         }
 
-        /* 1. AŞAMA: Küçülüp yok olma animasyonu */
+        
         .kucul-yok-ol {
             animation: kuculYokOl 0.4s forwards;
-            pointer-events: none; /* Küçülürken tıklanmayı engeller */
+            pointer-events: none; 
         }
 
         @keyframes kuculYokOl {
@@ -177,9 +177,9 @@
             100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
         }
 
-        /* 2. AŞAMA: Büyüyerek ve zıplayarak ekrana gelme animasyonu */
+        
         .buyu-yerine-gec {
-            /* Yay gibi esneyerek gelir */
+            
             animation: buyuGel 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             color: #00ff00;
             pointer-events: none;
@@ -207,7 +207,7 @@
             z-index: 10;
         }
 
-        /* --- BAŞLIK İÇİN KÜÇÜLME VE BÜYÜME ANİMASYONLARI --- */
+        
         
         .baslik-kucul {
             animation: baslikKuculYokOl 0.4s forwards;
@@ -255,7 +255,7 @@
     </div>
 
     <div class="kedi-cercevesi" id="cerceve">
-        <!-- İLK KEDİ FOTOĞRAFI -->
+        
         <img src="img/cat.png" alt="Kedi" class="kedi-foto" id="kedi-resmi">
         
         
@@ -290,7 +290,7 @@
             const istekli = document.getElementById('istekli');
             const sayac = document.getElementById('sayac');
             
-            // Müziği JS ile yakalıyoruz
+            
             const abdestMuzik = document.getElementById('abdest-muzik');
             
             let islemTamam = false; 
@@ -376,7 +376,7 @@
         });
     </script>
 
-    <!-- Senin harici JavaScript dosyaların -->
+    
     <script src="java/indexhelper2.js"></script>
 
     <script>
