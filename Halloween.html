@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halloween - Mini Oyun</title>
+    
+    <!-- Senin sitendeki font ve CSS yapısı -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/yazi.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a0a0a;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        .oyun-alani {
+            position: relative;
+            width: 800px;
+            max-width: 90vw;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid #FFD700;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .oyun-bilgi {
+            display: flex;
+            justify-content: space-between;
+            width: 800px;
+            max-width: 90vw;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        /* Yakalanacak Bal Kabağı */
+        .bal-kabagi {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            font-size: 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s;
+        }
+
+        .bal-kabagi:active {
+            transform: scale(0.8);
+        }
+
+        .oyun-baslik {
+            color: #FFD700;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .basla-btn {
+            padding: 12px 30px;
+            background-color: #FFD700;
+            color: #111;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+
+        .basla-btn:hover {
+            background-color: #e6c200;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Üst Navbar (Diğer sayfalarla aynı mantık) -->
+    <div id="navbar-placeholder"></div>
+
+    <ul class="arkaplan-daireleri">
+        <li></li><li></li><li></li><li></li><li></li><li></li>
+    </ul>
+
+    <h2 class="oyun-baslik">🎃 Halloween Bal Kabağı Avı 🎃</h2>
+    
+    <div class="oyun-bilgi">
+        <span id="skor-gosterge">Skor: 0</span>
+        <span id="sure-gosterge">Süre: 30s</span>
+    </div>
+
+    <div class="oyun-alani" id="oyun-alani">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center;">
+            <p style="color: #888; margin-bottom: 20px;">Ekranda beliren balkabaklarına tıklayarak en yüksek skoru elde et!</p>
+            <button class="basla-btn" id="basla-btn">Oyunu Başlat</button>
+        </div>
+    </div>
+
+    <!-- Navbar'ı ve diğer scriptleri dahil ediyoruz -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Navbar'ı dışarıdan çekiyoruz
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbar-placeholder').innerHTML = data;
+                });
+
+            const oyunAlani = document.getElementById('oyun-alani');
+            const baslaBtn = document.getElementById('basla-btn');
+            const skorGosterge = document.getElementById('skor-gosterge');
+            const sureGosterge = document.getElementById('sure-gosterge');
+
+            let skor = 0;
+            let kalanSure = 30;
+            let oyunAktif = false;
+            let kabakUretici;
+            let sureSayaci;
+
+            baslaBtn.addEventListener('click', oyunuBaslat);
+
+            function oyunuBaslat() {
+                oyunAlani.innerHTML = '';
+                skor = 0;
+                kalanSure = 30;
+                oyunAktif = true;
+                skorGosterge.textContent = `Skor: ${skor}`;
+                sureGosterge.textContent = `Süre: ${kalanSure}s`;
+                baslaBtn.style.display = 'none';
+
+                // Süreyi başlat
+                sureSayaci = setInterval(() => {
+                    kalanSure--;
+                    sureGosterge.textContent = `Süre: ${kalanSure}s`;
+
+                    if (kalanSure <= 0) {
+                        oyunuBitir();
+                    }
+                }, 1000);
+
+                // Balkabağı üretmeye başla
+                kabakUretici = setInterval(kabakOlustur, 700);
+            }
+
+            function kabakOlustur() {
+                if (!oyunAktif) return;
+
+                const kabak = document.createElement('div');
+                kabak.classList.add('bal-kabagi');
+                kabak.innerHTML = '🎃';
+
+                // Oyun alanı içinde rastgele koordinatlar
+                const maxX = oyunAlani.clientWidth - 70;
+                const maxY = oyunAlani.clientHeight - 70;
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+
+                kabak.style.left = randomX + 'px';
+                kabak.style.top = randomY + 'px';
+
+                // Tıklandığında skoru artır ve kabağı yok et
+                kabak.addEventListener('click', () => {
+                    if (!oyunAktif) return;
+                    skor += 10;
+                    skorGosterge.textContent = `Skor: ${skor}`;
+                    kabak.remove();
+                });
+
+                oyunAlani.appendChild(kabak);
+
+                // 1.2 saniye içinde tıklanmazsa kabak kaybolsun
+                setTimeout(() => {
+                    if (kabak.parentElement) {
+                        kabak.remove();
+                    }
+                }, 1200);
+            }
+
+            function oyunuBitir() {
+                oyunAktif = false;
+                clearInterval(sureSayaci);
+                clearInterval(kabakUretici);
+
+                oyunAlani.innerHTML = `
+                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center;">
+                        <h3 style="color: #FFD700; font-size: 1.8rem; margin-bottom: 10px;">Süre Bitti!</h3>
+                        <p style="font-size: 1.2rem; margin-bottom: 20px;">Toplam Skorun: <strong>${skor}</strong></p>
+                        <button class="basla-btn" id="tekrar-basla-btn">Tekrar Oyna</button>
+                    </div>
+                `;
+
+                document.getElementById('tekrar-basla-btn').addEventListener('click', oyunuBaslat);
+            }
+        });
+    </script>
+</body>
+</html>
