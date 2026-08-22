@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halloween - 2D Doom Style</title>
+    <title>Halloween - Escape</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/yazi.css">
@@ -23,7 +23,6 @@
             color: white;
         }
 
-        /* Ana Oyun Çerçevesi */
         .oyun-kapsayici {
             position: relative;
             width: 800px;
@@ -36,13 +35,10 @@
             overflow: hidden;
         }
 
-        /* --- ARAYÜZ (UI) EKRANLARI --- */
+        /* --- ARAYÜZ (UI) --- */
         .ui-ekran {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10, 10, 10, 0.9);
             display: flex;
             flex-direction: column;
@@ -56,14 +52,14 @@
         .oyun-baslik {
             color: #FFD700;
             font-size: 2.5rem;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             letter-spacing: 3px;
             text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
             text-align: center;
         }
 
         .menu-btn {
-            width: 200px;
+            width: 250px;
             padding: 15px;
             background-color: transparent;
             color: #FFD700;
@@ -83,25 +79,29 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
 
-        /* Ayarlar Slider */
-        .ayarlar-grup {
-            margin-bottom: 30px;
-            text-align: center;
+        .yildiz-kutusu {
+            font-size: 3rem;
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+            color: #444; /* Pasif yıldız rengi */
+        }
+        
+        .sari-yildiz {
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
         }
 
-        /* --- OYUN CANVAS --- */
+        /* --- CANVAS --- */
         #oyunCanvas {
             width: 100%;
             height: 100%;
-            background-color: #222; /* Zemin rengi */
+            background-color: #1a1a1a;
             display: block;
         }
 
         .oyun-hud {
             position: absolute;
-            top: 15px;
-            left: 20px;
-            right: 20px;
+            top: 15px; left: 20px; right: 20px;
             display: flex;
             justify-content: space-between;
             font-size: 1.2rem;
@@ -122,257 +122,283 @@
 
     <div class="oyun-kapsayici">
         
-        <!-- ÜST BİLGİ (HUD) -->
         <div class="oyun-hud gizli" id="oyun-hud">
-            <span id="skor-metni">Skor: 0</span>
-            <span id="sure-metni">Süre: 45</span>
+            <span id="seviye-metni">Bölüm: 1</span>
+            <span id="kabak-metni">🎃 0/3</span>
         </div>
 
-        <!-- CANVAS MOTORU -->
         <canvas id="oyunCanvas" width="800" height="500"></canvas>
 
-        <!-- 1. ANA MENÜ EKRANI -->
+        <!-- ANA MENÜ -->
         <div class="ui-ekran" id="ana-menu">
-            <h1 class="oyun-baslik">🎃 PUMPKIN DOOM 🎃</h1>
+            <h1 class="oyun-baslik">🎃 PUMPKIN ESCAPE 🎃</h1>
+            <p style="color:#aaa; margin-bottom: 30px;">Yeşil küpü WASD ile hareket ettir. Hayaletlere değme!</p>
             <button class="menu-btn" id="btn-oyna">Oyuna Başla</button>
-            <button class="menu-btn" id="btn-ayarlar">Ayarlar</button>
         </div>
 
-        <!-- 2. AYARLAR EKRANI -->
-        <div class="ui-ekran gizli" id="ayarlar-menu">
-            <h2 class="oyun-baslik" style="font-size: 2rem;">AYARLAR</h2>
-            <div class="ayarlar-grup">
-                <label style="display:block; margin-bottom: 10px; color: #ccc;">Oyun Zorluğu / Hızı</label>
-                <input type="range" min="1" max="3" value="2" id="zorluk-slider">
-            </div>
-            <button class="menu-btn" id="btn-geri">Geri Dön</button>
+        <!-- ÖLDÜN EKRANI -->
+        <div class="ui-ekran gizli" id="olum-menu">
+            <h1 class="oyun-baslik" style="color: #ff3333; text-shadow: 0 0 15px red;">ÖLDÜN!</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">Hayalete yakalandın veya tuzağa düştün.</p>
+            <button class="menu-btn" id="btn-tekrar-dene">Tekrar Dene</button>
+            <button class="menu-btn" id="btn-ana-menu">Ana Menü</button>
         </div>
 
-        <!-- 3. OYUN BİTTİ EKRANI -->
-        <div class="ui-ekran gizli" id="oyun-bitti-menu">
-            <h1 class="oyun-baslik" style="color: #ff3333;">SÜRE BİTTİ</h1>
-            <p style="font-size: 1.5rem; margin-bottom: 30px;">Toplanan Kabak: <strong id="son-skor" style="color: #00ff00;">0</strong></p>
-            <button class="menu-btn" id="btn-tekrar">Yeniden Oyna</button>
-            <button class="menu-btn" id="btn-menuye-don">Ana Menü</button>
+        <!-- BÖLÜM GEÇİLDİ EKRANI -->
+        <div class="ui-ekran gizli" id="zafer-menu">
+            <h1 class="oyun-baslik" style="color: #00ff00;">BÖLÜM TAMAMLANDI</h1>
+            <div class="yildiz-kutusu" id="yildiz-gosterge">★ ★ ★</div>
+            <button class="menu-btn" id="btn-siradaki-bolum">Sıradaki Bölüm</button>
         </div>
 
     </div>
 
-    <!-- OYUN MOTORU (JAVASCRIPT) -->
     <script>
-        // Navbar Yükleme
         fetch('navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar-placeholder').innerHTML = data);
 
-        // UI Elementleri
-        const anaMenu = document.getElementById('ana-menu');
-        const ayarlarMenu = document.getElementById('ayarlar-menu');
-        const oyunBittiMenu = document.getElementById('oyun-bitti-menu');
-        const oyunHud = document.getElementById('oyun-hud');
-        
-        const skorMetni = document.getElementById('skor-metni');
-        const sureMetni = document.getElementById('sure-metni');
-        const sonSkor = document.getElementById('son-skor');
-
-        // Buton Dinleyicileri
-        document.getElementById('btn-oyna').addEventListener('click', oyunuBaslat);
-        document.getElementById('btn-tekrar').addEventListener('click', oyunuBaslat);
-        document.getElementById('btn-ayarlar').addEventListener('click', () => {
-            anaMenu.classList.add('gizli');
-            ayarlarMenu.classList.remove('gizli');
-        });
-        document.getElementById('btn-geri').addEventListener('click', () => {
-            ayarlarMenu.classList.add('gizli');
-            anaMenu.classList.remove('gizli');
-        });
-        document.getElementById('btn-menuye-don').addEventListener('click', () => {
-            oyunBittiMenu.classList.add('gizli');
-            anaMenu.classList.remove('gizli');
-        });
-
-        // CANVAS AYARLARI
         const canvas = document.getElementById('oyunCanvas');
         const ctx = canvas.getContext('2d');
 
-        // OYUN DEĞİŞKENLERİ
+        // Arayüz Elementleri
+        const anaMenu = document.getElementById('ana-menu');
+        const olumMenu = document.getElementById('olum-menu');
+        const zaferMenu = document.getElementById('zafer-menu');
+        const oyunHud = document.getElementById('oyun-hud');
+        
+        const seviyeMetni = document.getElementById('seviye-metni');
+        const kabakMetni = document.getElementById('kabak-metni');
+        const yildizGosterge = document.getElementById('yildiz-gosterge');
+
+        let mevcutBolumIndeksi = 0;
+        let toplananKabak = 0;
         let oyunAktif = false;
-        let skor = 0;
-        let sure = 45;
-        let sureSayaci;
         let animasyonID;
 
-        // KONTROLLER (WASD)
+        // Kontroller
         const tuslar = { w: false, a: false, s: false, d: false };
+        window.addEventListener('keydown', e => { if (e.key.toLowerCase() in tuslar) tuslar[e.key.toLowerCase()] = true; });
+        window.addEventListener('keyup', e => { if (e.key.toLowerCase() in tuslar) tuslar[e.key.toLowerCase()] = false; });
 
-        window.addEventListener('keydown', (e) => {
-            if (e.key.toLowerCase() in tuslar) tuslar[e.key.toLowerCase()] = true;
-        });
-        window.addEventListener('keyup', (e) => {
-            if (e.key.toLowerCase() in tuslar) tuslar[e.key.toLowerCase()] = false;
-        });
+        // Oyuncu Objesi
+        const oyuncu = { x: 0, y: 0, boyut: 20, hiz: 4, renk: '#00ff00' };
 
-        // OYUNCU (Karakter)
-        const oyuncu = {
-            x: 50, y: 50,
-            boyut: 20,
-            hiz: 4,
-            renk: '#00ff00'
-        };
+        // Aktif Bölüm Verileri (Geçici Hafıza)
+        let aktifDuvarlar = [];
+        let aktifDusmanlar = [];
+        let aktifKabaklar = [];
+        let aktifBitis = {};
 
-        // HARİTA DUVARLARI (Collider'lar)
-        const duvarlar = [
-            { x: 150, y: 0, w: 40, h: 200 },
-            { x: 150, y: 300, w: 40, h: 200 },
-            { x: 350, y: 150, w: 200, h: 40 },
-            { x: 450, y: 150, w: 40, h: 200 },
-            { x: 600, y: 0, w: 40, h: 350 }
+        // --- BÖLÜM TASARIMLARI (Level Design) ---
+        const bolumler = [
+            {
+                baslangic: { x: 50, y: 50 },
+                bitis: { x: 700, y: 400, w: 50, h: 50 },
+                duvarlar: [
+                    { x: 150, y: 0, w: 40, h: 300 },
+                    { x: 350, y: 200, w: 40, h: 300 },
+                    { x: 550, y: 0, w: 40, h: 350 }
+                ],
+                dusmanlar: [
+                    // Y ekseninde (aşağı yukarı) devriye atan düşman
+                    { x: 250, y: 50, boyut: 24, hizX: 0, hizY: 3, sinirMinY: 50, sinirMaxY: 400 }
+                ],
+                kabaklar: [
+                    { x: 250, y: 420 },
+                    { x: 450, y: 50 },
+                    { x: 650, y: 420 }
+                ]
+            },
+            // 2. BÖLÜM (Daha zor)
+            {
+                baslangic: { x: 50, y: 400 },
+                bitis: { x: 700, y: 50, w: 50, h: 50 },
+                duvarlar: [
+                    { x: 120, y: 150, w: 600, h: 40 },
+                    { x: 120, y: 300, w: 600, h: 40 }
+                ],
+                dusmanlar: [
+                    // X ekseninde (sağa sola) devriye atan düşmanlar
+                    { x: 150, y: 220, boyut: 24, hizX: 4, hizY: 0, sinirMinX: 150, sinirMaxX: 650 },
+                    { x: 650, y: 380, boyut: 24, hizX: -5, hizY: 0, sinirMinX: 150, sinirMaxX: 650 }
+                ],
+                kabaklar: [
+                    { x: 50, y: 50 },
+                    { x: 380, y: 230 },
+                    { x: 700, y: 400 }
+                ]
+            }
         ];
 
-        // BALKABAKLARI
-        let kabaklar = [];
+        // BUTON OLAYLARI
+        document.getElementById('btn-oyna').addEventListener('click', () => bolumuYukle(0));
+        document.getElementById('btn-tekrar-dene').addEventListener('click', () => bolumuYukle(mevcutBolumIndeksi));
+        document.getElementById('btn-siradaki-bolum').addEventListener('click', () => {
+            mevcutBolumIndeksi++;
+            if(mevcutBolumIndeksi >= bolumler.length) mevcutBolumIndeksi = 0; // Oyun bittiyse başa dön
+            bolumuYukle(mevcutBolumIndeksi);
+        });
+        document.getElementById('btn-ana-menu').addEventListener('click', () => {
+            olumMenu.classList.add('gizli');
+            anaMenu.classList.remove('gizli');
+        });
 
-        function kabakUret() {
-            // Rastgele kabak oluştur, ama duvarların içine düşmesin
-            let gecerliKonum = false;
-            let kx, ky;
+        // BÖLÜMÜ BAŞLATMA FONKSİYONU
+        function bolumuYukle(indeks) {
+            mevcutBolumIndeksi = indeks;
+            let veri = bolumler[indeks];
+
+            // Oyuncuyu başlangıca koy
+            oyuncu.x = veri.baslangic.x;
+            oyuncu.y = veri.baslangic.y;
+
+            // Bölüm verilerini aktif hafızaya kopyala (Klonlama)
+            aktifDuvarlar = JSON.parse(JSON.stringify(veri.duvarlar));
+            aktifDusmanlar = JSON.parse(JSON.stringify(veri.dusmanlar));
+            aktifKabaklar = JSON.parse(JSON.stringify(veri.kabaklar));
+            aktifBitis = JSON.parse(JSON.stringify(veri.bitis));
+
+            toplananKabak = 0;
+            oyunAktif = true;
+
+            // Arayüzü Güncelle
+            seviyeMetni.textContent = `Bölüm: ${mevcutBolumIndeksi + 1}`;
+            kabakMetni.textContent = `🎃 ${toplananKabak}/3`;
             
-            while (!gecerliKonum) {
-                kx = Math.random() * (canvas.width - 40) + 20;
-                ky = Math.random() * (canvas.height - 40) + 20;
-                
-                gecerliKonum = true;
-                for (let d of duvarlar) {
-                    if (kx > d.x - 20 && kx < d.x + d.w + 20 && ky > d.y - 20 && ky < d.y + d.h + 20) {
-                        gecerliKonum = false; // Duvara çarptı, tekrar dene
-                        break;
-                    }
-                }
-            }
-            kabaklar.push({ x: kx, y: ky, yaricap: 15 });
+            anaMenu.classList.add('gizli');
+            olumMenu.classList.add('gizli');
+            zaferMenu.classList.add('gizli');
+            oyunHud.classList.remove('gizli');
+
+            oyunDongusu();
         }
 
-        // ÇARPIŞMA ALGILAMA (AABB - Axis-Aligned Bounding Box)
-        function carpiyorMu(nx, ny) {
-            // Ekran sınırları
-            if (nx < 0 || nx + oyuncu.boyut > canvas.width || ny < 0 || ny + oyuncu.boyut > canvas.height) return true;
+        // ÇARPIŞMA (AABB - Kutu Çarpışması)
+        function kutuCarpisiyorMu(x1, y1, w1, h1, x2, y2, w2, h2) {
+            return (x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2);
+        }
 
-            // Duvar sınırları
-            for (let d of duvarlar) {
-                if (nx < d.x + d.w && nx + oyuncu.boyut > d.x && ny < d.y + d.h && ny + oyuncu.boyut > d.y) {
-                    return true;
-                }
+        // DUVAR VE SINIR KONTROLÜ
+        function duvaraCarpiyorMu(hedefX, hedefY) {
+            if (hedefX < 0 || hedefX + oyuncu.boyut > canvas.width || hedefY < 0 || hedefY + oyuncu.boyut > canvas.height) return true;
+            for (let d of aktifDuvarlar) {
+                if (kutuCarpisiyorMu(hedefX, hedefY, oyuncu.boyut, oyuncu.boyut, d.x, d.y, d.w, d.h)) return true;
             }
             return false;
         }
 
-        function oyunuBaslat() {
-            // Menüleri Gizle
-            anaMenu.classList.add('gizli');
-            oyunBittiMenu.classList.add('gizli');
-            oyunHud.classList.remove('gizli');
-
-            // Değerleri Sıfırla
-            skor = 0;
-            sure = 45;
-            oyuncu.x = 50;
-            oyuncu.y = 50;
-            kabaklar = [];
-            
-            skorMetni.textContent = `Skor: ${skor}`;
-            sureMetni.textContent = `Süre: ${sure}`;
-            
-            oyunAktif = true;
-
-            // Başlangıçta 3 kabak koy
-            kabakUret(); kabakUret(); kabakUret();
-
-            // Süre Sayacı
-            clearInterval(sureSayaci);
-            sureSayaci = setInterval(() => {
-                sure--;
-                sureMetni.textContent = `Süre: ${sure}`;
-                if (sure <= 0) oyunuBitir();
-            }, 1000);
-
-            // Döngüyü Başlat
-            oyunDongusu();
+        function olumTetikle() {
+            oyunAktif = false;
+            cancelAnimationFrame(animasyonID);
+            oyunHud.classList.add('gizli');
+            olumMenu.classList.remove('gizli');
         }
 
-        function oyunuBitir() {
+        function zaferTetikle() {
             oyunAktif = false;
-            clearInterval(sureSayaci);
             cancelAnimationFrame(animasyonID);
             
+            // Yıldızları Hesapla
+            let yildizHTML = "";
+            for(let i=0; i<3; i++) {
+                if(i < toplananKabak) yildizHTML += `<span class="sari-yildiz">★</span> `;
+                else yildizHTML += `<span>★</span> `;
+            }
+            yildizGosterge.innerHTML = yildizHTML;
+
             oyunHud.classList.add('gizli');
-            oyunBittiMenu.classList.remove('gizli');
-            sonSkor.textContent = skor;
+            zaferMenu.classList.remove('gizli');
         }
 
-        // UPDATE VE DRAW DÖNGÜSÜ
+        // ANA OYUN DÖNGÜSÜ (Update & Draw)
         function oyunDongusu() {
             if (!oyunAktif) return;
 
-            // --- 1. UPDATE (Fizik ve Hareket) ---
-            let nx = oyuncu.x;
-            let ny = oyuncu.y;
+            // 1. OYUNCU HAREKETİ (X ve Y eksenini ayrı hesaplıyoruz ki duvarlarda kayabilsin)
+            let yeniX = oyuncu.x;
+            let yeniY = oyuncu.y;
 
-            if (tuslar.w) ny -= oyuncu.hiz;
-            if (tuslar.s) ny += oyuncu.hiz;
-            if (tuslar.a) nx -= oyuncu.hiz;
-            if (tuslar.d) nx += oyuncu.hiz;
+            if (tuslar.w) yeniY -= oyuncu.hiz;
+            if (tuslar.s) yeniY += oyuncu.hiz;
+            if (tuslar.a) yeniX -= oyuncu.hiz;
+            if (tuslar.d) yeniX += oyuncu.hiz;
 
-            // Sadece X ekseninde çarpışma kontrolü
-            if (!carpiyorMu(nx, oyuncu.y)) oyuncu.x = nx;
-            // Sadece Y ekseninde çarpışma kontrolü
-            if (!carpiyorMu(oyuncu.x, ny)) oyuncu.y = ny;
+            if (!duvaraCarpiyorMu(yeniX, oyuncu.y)) oyuncu.x = yeniX;
+            if (!duvaraCarpiyorMu(oyuncu.x, yeniY)) oyuncu.y = yeniY;
 
-            // Kabak toplama (Mesafe hesaplama)
-            for (let i = kabaklar.length - 1; i >= 0; i--) {
-                let k = kabaklar[i];
-                let merkezX = oyuncu.x + (oyuncu.boyut / 2);
-                let merkezY = oyuncu.y + (oyuncu.boyut / 2);
-                let mesafe = Math.hypot(merkezX - k.x, merkezY - k.y);
+            // 2. DÜŞMAN (HAYALET) HAREKETİ VE ÇARPIŞMASI
+            for (let dusman of aktifDusmanlar) {
+                dusman.x += dusman.hizX;
+                dusman.y += dusman.hizY;
 
-                if (mesafe < (oyuncu.boyut / 2) + k.yaricap) {
-                    kabaklar.splice(i, 1);
-                    skor += 10;
-                    skorMetni.textContent = `Skor: ${skor}`;
-                    kabakUret(); // Yenisini oluştur
+                // Devriye Sınırlarını Kontrol Et (Ping-Pong hareketi)
+                if(dusman.hizX !== 0) {
+                    if (dusman.x < dusman.sinirMinX || dusman.x > dusman.sinirMaxX) dusman.hizX *= -1;
+                }
+                if(dusman.hizY !== 0) {
+                    if (dusman.y < dusman.sinirMinY || dusman.y > dusman.sinirMaxY) dusman.hizY *= -1;
+                }
+
+                // Düşmana Değdik mi?
+                if (kutuCarpisiyorMu(oyuncu.x, oyuncu.y, oyuncu.boyut, oyuncu.boyut, dusman.x, dusman.y, dusman.boyut, dusman.boyut)) {
+                    olumTetikle();
+                    return; // Döngüyü anında kes
                 }
             }
 
-            // --- 2. DRAW (Çizim Ekranı) ---
+            // 3. BALKABAĞI TOPLAMA
+            for (let i = aktifKabaklar.length - 1; i >= 0; i--) {
+                let k = aktifKabaklar[i];
+                if (kutuCarpisiyorMu(oyuncu.x, oyuncu.y, oyuncu.boyut, oyuncu.boyut, k.x - 10, k.y - 10, 30, 30)) {
+                    aktifKabaklar.splice(i, 1); // Kabağı sil
+                    toplananKabak++;
+                    kabakMetni.textContent = `🎃 ${toplananKabak}/3`;
+                }
+            }
+
+            // 4. BİTİŞ PORTALINA ULAŞMA
+            if (kutuCarpisiyorMu(oyuncu.x, oyuncu.y, oyuncu.boyut, oyuncu.boyut, aktifBitis.x, aktifBitis.y, aktifBitis.w, aktifBitis.h)) {
+                zaferTetikle();
+                return;
+            }
+
+            // --- ÇİZİM (DRAW) ---
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Zemin Çizgileri (Süsleme)
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 1;
+            // Zemin Süslemesi
+            ctx.strokeStyle = '#222'; ctx.lineWidth = 1;
             for(let i=0; i<canvas.width; i+=40) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,canvas.height); ctx.stroke(); }
             for(let i=0; i<canvas.height; i+=40) { ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(canvas.width,i); ctx.stroke(); }
 
+            // Bitiş Portalı Çiz
+            ctx.fillStyle = 'rgba(0, 255, 255, 0.3)'; // Açık mavi portal
+            ctx.fillRect(aktifBitis.x, aktifBitis.y, aktifBitis.w, aktifBitis.h);
+            ctx.strokeStyle = 'cyan';
+            ctx.strokeRect(aktifBitis.x, aktifBitis.y, aktifBitis.w, aktifBitis.h);
+
             // Duvarları Çiz
             ctx.fillStyle = '#FFD700';
-            ctx.shadowColor = 'rgba(255, 215, 0, 0.5)';
+            ctx.shadowColor = 'rgba(255, 215, 0, 0.4)';
             ctx.shadowBlur = 10;
-            for (let d of duvarlar) {
-                ctx.fillRect(d.x, d.y, d.w, d.h);
-            }
-            ctx.shadowBlur = 0; // Kapat
+            for (let d of aktifDuvarlar) ctx.fillRect(d.x, d.y, d.w, d.h);
+            ctx.shadowBlur = 0;
 
-            // Kabakları Çiz
+            // Balkabaklarını Çiz
             ctx.font = '24px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            for (let k of kabaklar) {
-                ctx.fillText('🎃', k.x, k.y);
-            }
+            for (let k of aktifKabaklar) ctx.fillText('🎃', k.x, k.y);
 
-            // Oyuncuyu Çiz
+            // Düşmanları Çiz (Hayaletler)
+            ctx.font = '24px Arial';
+            for (let d of aktifDusmanlar) ctx.fillText('👻', d.x, d.y + 20);
+
+            // Oyuncuyu Çiz (Yeşil Küp)
             ctx.fillStyle = oyuncu.renk;
+            ctx.shadowColor = '#00ff00';
+            ctx.shadowBlur = 15;
             ctx.fillRect(oyuncu.x, oyuncu.y, oyuncu.boyut, oyuncu.boyut);
+            ctx.shadowBlur = 0;
 
-            // Sonraki frame'i çağır
             animasyonID = requestAnimationFrame(oyunDongusu);
         }
     </script>
