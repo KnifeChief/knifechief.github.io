@@ -24,10 +24,10 @@ async function updateSpotify() {
     try {
         // DİKKAT: Vercel sunucumuzu kurduğumuzda buraya o sunucunun linkini yazacağız!
         // Şimdilik hazırlık olarak boş bırakıyoruz.
-        const BACKEND_URL = "BURAYA_VERCEL_LINKIMIZ_GELECEK"; 
+        const BACKEND_URL = "https://spotify-backend-two-mauve.vercel.app/api/spotify"; 
         
         // Eğer Vercel linki henüz girilmediyse uyarı ver ve sistemi yorma
-        if(BACKEND_URL === "BURAYA_VERCEL_LINKIMIZ_GELECEK") {
+        if(BACKEND_URL === "https://spotify-backend-two-mauve.vercel.app/api/spotify") {
             console.log("⏳ Vercel backend linki bekleniyor...");
             return;
         }
