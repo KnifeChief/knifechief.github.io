@@ -51,48 +51,6 @@
         }
     });
 
-    // --- SPOTIFY SOLOIST API ENTEGRASYONU ---
-    // Ekran görüntüsündeki kendi anahtarını buraya ekledik
-    const SOLOIST_API_KEY = "spak_1Ser2X21riWTC3DWlr8T0IZighsaupZf"; 
     
-    async function updateNavbarSpotify() {
-        console.log("🔍 Spotify'a istek atılıyor...");
-        try {
-            // Doğrudan Spotify'ın şu an çalan parça ucuna (endpoint) bağlanıyoruz
-            const response = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
-                headers: {
-                    "Authorization": `Bearer ${SOLOIST_API_KEY}`
-                }
-            });
-
-            const spotifyModul = document.getElementById("spotify-mini");
-
-            // Durum 200 ise bir şeyler çalıyordur
-            if (response.status === 200) {
-                const data = await response.json();
-                if (data && data.item) {
-                    console.log("🎵 Şarkı bulundu:", data.item.name);
-                    spotifyModul.style.display = "flex"; // Logoyu göster
-                    document.getElementById("nav-sarki").textContent = data.item.name;
-                    document.getElementById("nav-sanatci").textContent = data.item.artists.map(a => a.name).join(", ");
-                }
-                else if (response.status === 204) {
-                console.log("⏸️ Şu an şarkı çalmıyor (204 Kodu). Modül gizlendi.");
-                if(spotifyModul) spotifyModul.style.display = "none";
-            } 
-                else {
-                console.log("⚠️ Bilinmeyen durum:", response.status);
-                // Şarkı durmuşsa veya reklam girmişse modülü tamamen gizle
-                spotifyModul.style.display = "none";
-            }
-        } catch (error) {
-            console.error("Spotify API Bağlantı Hatası:", error);
-            document.getElementById("spotify-mini").style.display = "none";
-        }
-    }
-
-    // Sayfa yüklendiğinde ve her 10 saniyede bir kontrol et
-    updateNavbarSpotify();
-    setInterval(updateNavbarSpotify, 10000); 
 </script>
 
