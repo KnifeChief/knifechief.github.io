@@ -273,6 +273,68 @@
 
     </div>
 
+
+    <script>
+        // Navbar Yükleme (Önceki kodun)
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            });
+
+        // --- CANLI SPOTIFY (LANYARD API) ---
+        // BURAYA KENDİ DISCORD ID'Nİ YAZMALISIN (Tırnak işaretlerini silme!)
+        const discordID = "SENIN_DISCORD_ID_BURAYA"; 
+        
+        const sarkiAdi = document.getElementById('sarki-adi');
+        const sanatciAdi = document.getElementById('sanatci-adi');
+        const durumYazisi = document.querySelector('.spotify-durum');
+        const sesDalgalari = document.querySelector('.ses-dalgalari');
+        const ikon = document.querySelector('.spotify-ikon');
+
+        // Lanyard'dan veriyi çeken fonksiyon
+        async function spotifyGuncelle() {
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/${discordID}`);
+                const veri = await response.json();
+
+                if (veri.success && veri.data.spotify) {
+                    // Şarkı dinliyorsa
+                    const spotify = veri.data.spotify;
+                    
+                    sarkiAdi.textContent = spotify.song;
+                    sanatciAdi.textContent = spotify.artist;
+                    durumYazisi.textContent = "Şu An Dinliyor";
+                    durumYazisi.style.color = "#1DB954";
+                    
+                    sesDalgalari.style.display = "flex"; // Animasyonu göster
+                    ikon.style.animation = "nefesAl 2s infinite alternate"; // İkon parlasın
+                    
+                } else {
+                    // Dinlemiyorsa
+                    sarkiAdi.textContent = "Sessizlik...";
+                    sanatciAdi.textContent = "Şu an herhangi bir müzik çalmıyor.";
+                    durumYazisi.textContent = "Çevrimdışı";
+                    durumYazisi.style.color = "#888";
+                    
+                    sesDalgalari.style.display = "none"; // Animasyonu gizle
+                    ikon.style.animation = "none"; // İkonu sabitle
+                    ikon.style.boxShadow = "none";
+                }
+            } catch (error) {
+                console.error("Spotify verisi çekilemedi:", error);
+                sarkiAdi.textContent = "Bağlantı Hatası";
+                sanatciAdi.textContent = "Veri alınamıyor.";
+            }
+        }
+
+        // Sayfa açıldığında veriyi çek
+        spotifyGuncelle();
+        
+        // Her 10 saniyede bir veriyi otomatik güncelle (sayfayı yenilemeye gerek kalmadan)
+        setInterval(spotifyGuncelle, 10000);
+    </script>
+    
     <script>
         // Navbar Yükleme
         fetch('navbar.html')
