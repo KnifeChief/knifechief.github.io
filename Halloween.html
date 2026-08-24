@@ -252,25 +252,25 @@
         let aktifBitis = {};
         let aktifKapi = {};
 
-        // --- 10 BÖLÜM TASARIMI ---
+        // --- 10 BÖLÜM TASARIMI (DÜZELTİLMİŞ KOORDİNATLAR) ---
         const bolumler = [
             // Level 1: Öğretici
             { baslangic: { x: 50, y: 220 }, bitis: { x: 700, y: 200, w: 50, h: 50 },
-              kapi: { x: 600, y: 150, w: 20, h: 150 }, // Bitişi koruyan kapı
+              kapi: { x: 700, y: 200, w: 50, h: 50 }, // Tam olarak portalın üstünde
               duvarlar: [ { x: 150, y: 0, w: 40, h: 350 }, { x: 400, y: 150, w: 40, h: 350 } ],
               dusmanlar: [],
               kabaklar: [ { x: 100, y: 50 }, { x: 300, y: 400 }, { x: 500, y: 50 } ]
             },
             // Level 2: İlk Tehlike
             { baslangic: { x: 50, y: 50 }, bitis: { x: 700, y: 400, w: 50, h: 50 },
-              kapi: { x: 600, y: 350, w: 20, h: 150 },
+              kapi: { x: 700, y: 400, w: 50, h: 50 },
               duvarlar: [ { x: 200, y: 0, w: 40, h: 300 }, { x: 450, y: 200, w: 40, h: 300 } ],
               dusmanlar: [ { x: 300, y: 100, boyut: 24, hizX: 0, hizY: 4, sinirMinY: 50, sinirMaxY: 400 } ],
               kabaklar: [ { x: 250, y: 400 }, { x: 500, y: 100 }, { x: 750, y: 50 } ]
             },
             // Level 3: Devriye Düşmanlar
             { baslangic: { x: 50, y: 400 }, bitis: { x: 700, y: 50, w: 50, h: 50 },
-              kapi: { x: 700, y: 120, w: 50, h: 20 },
+              kapi: { x: 700, y: 50, w: 50, h: 50 },
               duvarlar: [ { x: 120, y: 150, w: 600, h: 40 }, { x: 120, y: 300, w: 600, h: 40 } ],
               dusmanlar: [ 
                   { x: 150, y: 220, boyut: 24, hizX: 5, hizY: 0, sinirMinX: 150, sinirMaxX: 650 },
@@ -280,7 +280,7 @@
             },
             // Level 4: Dar Koridorlar
             { baslangic: { x: 50, y: 50 }, bitis: { x: 350, y: 200, w: 50, h: 50 },
-              kapi: { x: 340, y: 190, w: 70, h: 70 }, // Bitişin etrafını sarar
+              kapi: { x: 350, y: 200, w: 50, h: 50 },
               duvarlar: [ { x: 0, y: 150, w: 300, h: 20 }, { x: 450, y: 150, w: 350, h: 20 }, { x: 300, y: 300, w: 200, h: 20 } ],
               dusmanlar: [ 
                   { x: 350, y: 50, boyut: 24, hizX: 0, hizY: 6, sinirMinY: 20, sinirMaxY: 130 },
@@ -290,16 +290,16 @@
             },
             // Level 5: Köşe Kapmaca
             { baslangic: { x: 380, y: 220 }, bitis: { x: 380, y: 50, w: 40, h: 40 },
-              kapi: { x: 380, y: 100, w: 40, h: 20 },
+              kapi: { x: 380, y: 50, w: 40, h: 40 },
               duvarlar: [ { x: 250, y: 150, w: 300, h: 20 }, { x: 250, y: 300, w: 300, h: 20 }, { x: 250, y: 150, w: 20, h: 170 }, { x: 530, y: 150, w: 20, h: 170 } ],
               dusmanlar: [
-                  { x: 100, y: 100, boyut: 24, hizX: 4, hizY: 4, sinirMinX: 50, sinirMaxX: 750, sinirMinY: 50, sinirMaxY: 450 } // Çapraz Düşman
+                  { x: 100, y: 100, boyut: 24, hizX: 4, hizY: 4, sinirMinX: 50, sinirMaxX: 750, sinirMinY: 50, sinirMaxY: 450 }
               ],
               kabaklar: [ { x: 50, y: 50 }, { x: 700, y: 400 }, { x: 50, y: 400 } ]
             },
             // Level 6: Çapraz Çılgınlık
             { baslangic: { x: 50, y: 400 }, bitis: { x: 700, y: 50, w: 50, h: 50 },
-              kapi: { x: 650, y: 0, w: 20, h: 150 },
+              kapi: { x: 700, y: 50, w: 50, h: 50 },
               duvarlar: [ { x: 200, y: 100, w: 20, h: 300 }, { x: 400, y: 100, w: 20, h: 300 } ],
               dusmanlar: [
                   { x: 100, y: 100, boyut: 24, hizX: 7, hizY: 7, sinirMinX: 0, sinirMaxX: 800, sinirMinY: 0, sinirMaxY: 500 },
@@ -309,7 +309,7 @@
             },
             // Level 7: Zikzak Zindanı
             { baslangic: { x: 50, y: 50 }, bitis: { x: 50, y: 400, w: 50, h: 50 },
-              kapi: { x: 0, y: 380, w: 150, h: 20 },
+              kapi: { x: 50, y: 400, w: 50, h: 50 },
               duvarlar: [ { x: 150, y: 0, w: 20, h: 400 }, { x: 300, y: 100, w: 20, h: 400 }, { x: 450, y: 0, w: 20, h: 400 }, { x: 600, y: 100, w: 20, h: 400 } ],
               dusmanlar: [
                   { x: 200, y: 250, boyut: 24, hizX: 0, hizY: 8, sinirMinY: 0, sinirMaxY: 500 },
@@ -317,10 +317,10 @@
               ],
               kabaklar: [ { x: 225, y: 50 }, { x: 375, y: 450 }, { x: 700, y: 50 } ]
             },
-            // Level 8: Hız Tuzağı
-            { baslangic: { x: 700, y: 100 }, bitis: { x: 700, y: 250, w: 50, h: 50 },
-              kapi: { x: 650, y: 200, w: 20, h: 150 },
-              duvarlar: [ { x: 400, y: 230, w: 60, h: 110 } ], // Sadece ortada bir kare duvar
+            // Level 8: Hız Tuzağı (DUVAR İÇİNDE DOĞMA HATASI ÇÖZÜLDÜ)
+            { baslangic: { x: 50, y: 250 }, bitis: { x: 700, y: 250, w: 50, h: 50 },
+              kapi: { x: 700, y: 250, w: 50, h: 50 },
+              duvarlar: [ { x: 350, y: 200, w: 100, h: 100 } ], 
               dusmanlar: [
                   { x: 100, y: 100, boyut: 24, hizX: 12, hizY: 0, sinirMinX: 0, sinirMaxX: 800 },
                   { x: 100, y: 400, boyut: 24, hizX: 12, hizY: 0, sinirMinX: 0, sinirMaxX: 800 }
@@ -329,16 +329,16 @@
             },
             // Level 9: Keskin Nişancı
             { baslangic: { x: 50, y: 250 }, bitis: { x: 700, y: 250, w: 50, h: 50 },
-              kapi: { x: 600, y: 200, w: 20, h: 100 },
-              duvarlar: [ { x: 200, y: 0, w: 400, h: 200 }, { x: 200, y: 300, w: 400, h: 200 } ],
+              kapi: { x: 700, y: 250, w: 50, h: 50 },
+              duvarlar: [ { x: 200, y: 0, w: 400, h: 180 }, { x: 200, y: 320, w: 400, h: 180 } ],
               dusmanlar: [
-                  { x: 250, y: 240, boyut: 24, hizX: 18, hizY: 0, sinirMinX: 200, sinirMaxX: 600 } // İnanılmaz hızlı devriye
+                  { x: 250, y: 240, boyut: 24, hizX: 18, hizY: 0, sinirMinX: 200, sinirMaxX: 600 } 
               ],
               kabaklar: [ { x: 100, y: 50 }, { x: 100, y: 450 }, { x: 750, y: 450 } ]
             },
             // Level 10: Cehennem
             { baslangic: { x: 50, y: 50 }, bitis: { x: 375, y: 225, w: 50, h: 50 },
-              kapi: { x: 360, y: 210, w: 80, h: 80 },
+              kapi: { x: 375, y: 225, w: 50, h: 50 },
               duvarlar: [ { x: 150, y: 150, w: 500, h: 20 }, { x: 150, y: 330, w: 500, h: 20 } ],
               dusmanlar: [
                   { x: 0, y: 100, boyut: 24, hizX: 10, hizY: 0, sinirMinX: 0, sinirMaxX: 800 },
@@ -349,8 +349,6 @@
               kabaklar: [ { x: 750, y: 50 }, { x: 50, y: 450 }, { x: 750, y: 450 } ]
             }
         ];
-
-        // BUTONLARI OLUŞTUR
         const levelContainer = document.getElementById('level-container');
         for (let i = 0; i < bolumler.length; i++) {
             const btn = document.createElement('button');
