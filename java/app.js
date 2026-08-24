@@ -27,11 +27,11 @@ async function updateSpotify() {
         const BACKEND_URL = "https://spotify-backend-two-mauve.vercel.app/api/spotify"; 
         
         // Eğer Vercel linki henüz girilmediyse uyarı ver ve sistemi yorma
-        if(BACKEND_URL === "https://spotify-backend-two-mauve.vercel.app/api/spotify") {
-            console.log("⏳ Vercel backend linki bekleniyor...");
-            return;
-        }
+       async function updateSpotify() {
+    try {
+        const BACKEND_URL = "https://spotify-backend-two-mauve.vercel.app/api/spotify"; 
 
+        // Doğrudan istek atıyoruz, aradaki engel kalktı!
         const response = await fetch(BACKEND_URL);
         const spotifyModul = document.getElementById("spotify-mini");
 
