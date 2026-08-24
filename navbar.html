@@ -56,6 +56,7 @@
     const SOLOIST_API_KEY = "spak_1Ser2X21riWTC3DWlr8T0IZighsaupZf"; 
     
     async function updateNavbarSpotify() {
+        console.log("🔍 Spotify'a istek atılıyor...");
         try {
             // Doğrudan Spotify'ın şu an çalan parça ucuna (endpoint) bağlanıyoruz
             const response = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
