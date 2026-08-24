@@ -874,13 +874,39 @@ body {
     align-items: center;
 }
 
-.proje-yil {
-    font-size: 0.8rem;
-    color: #555;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 4px 12px;
+/* --- PROJE DURUM ETİKETLERİ (ANA İSKELET) --- */
+.proje-durum {
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    padding: 6px 14px;
     border-radius: 20px;
-    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease; /* Renk geçişleri yumuşak olsun */
+}
+
+/* 1. AŞAMA: Geliştirilmemiş (Şu anki gibi soluk gri) */
+.proje-durum.durum-pasif {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 2. AŞAMA: Geliştirme Aşamasında (Hafif sarı ve transparan) */
+.proje-durum.durum-suruyor {
+    background: rgba(255, 215, 0, 0.1); /* İçerisi hafif sarı */
+    color: #FFD700; /* Yazı rengi altın sarısı */
+    border: 1px solid rgba(255, 215, 0, 0.4); /* İnce sarı çerçeve */
+}
+
+/* 3. AŞAMA: Geliştirilmiş (Tamamen sarı, dikkat çekici) */
+.proje-durum.durum-tamam {
+    background: #FFD700; /* Tam altın sarısı dolgu */
+    color: #111; /* Zıtlık (kontrast) için siyahımsı yazı rengi */
+    border: 1px solid #FFD700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); /* Etrafına hafif sarı bir parlama verir */
 }
 
 .proje-icerik h3 {
