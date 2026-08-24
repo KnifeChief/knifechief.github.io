@@ -101,4 +101,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // app.js içindeki kısmı bul ve Vercel linkinin sonuna /api/spotify ekle!
-const BACKEND_URL = "https://SENIN-VERCEL-PROJE-LINKIN.vercel.app/api/spotify";
+const BACKEND_URL = "https://spotify-backend-two-mauve.vercel.app/api/spotify";
