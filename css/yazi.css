@@ -828,13 +828,13 @@ body {
 
 /* Kartların Dizilimi */
 .projeler-grid {
-    display: grid;
+    display: flex;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    flex-direction: column; /* Kartları alt alta dizer */
+    gap: 30px; /* Her kartın arasına otomatik 30 piksel boşluk bırakır. İsteğine göre artırıp azaltabilirsin. */
     max-width: 1200px;
     width: 100%;
 }
-
 /* Proje Kartı Tasarımı */
 .proje-karti {
     background: rgba(255, 255, 255, 0.02);
