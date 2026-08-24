@@ -829,8 +829,7 @@ body {
 /* Kartların Dizilimi */
 .projeler-grid {
     display: flex;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    flex-direction: column; /* Kartları alt alta dizer */
+    flex-direction: column;
     gap: 30px; /* Her kartın arasına otomatik 30 piksel boşluk bırakır. İsteğine göre artırıp azaltabilirsin. */
     max-width: 1200px;
     width: 100%;
