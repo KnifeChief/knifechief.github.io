@@ -6,6 +6,7 @@
     <title>Samed Çoban - İncelemeler</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Ana tasarım dosyan -->
     <link rel="stylesheet" href="css/yazi.css">
 
     <style>
@@ -16,110 +17,76 @@
             color: white;
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* --- SPOTIFY CANLI DİNLEME MODÜLÜ --- */
-        .spotify-kapsayici {
-            margin: 120px auto 40px auto;
-            max-width: 800px;
-            width: 90%;
-            background: rgba(30, 215, 96, 0.05);
-            border: 1px solid rgba(30, 215, 96, 0.2);
-            border-radius: 15px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(30, 215, 96, 0.1);
-            transition: all 0.3s ease;
+        /* Başlık Alanı */
+        .sayfa-baslik-alani {
+            text-align: center; 
+            margin: 120px 0 40px 0; /* Navbardan sonra boşluk */
+            position: relative; 
+            z-index: 5;
         }
 
-        .spotify-kapsayici:hover {
-            border-color: rgba(30, 215, 96, 0.5);
-            box-shadow: 0 10px 30px rgba(30, 215, 96, 0.2);
-            transform: translateY(-5px);
+        .sayfa-baslik-alani h1 {
+            color: #FFD700; 
+            font-size: 2.8rem; 
+            letter-spacing: 1px; 
+            margin: 0;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
-        .spotify-ikon {
-            width: 50px;
-            height: 50px;
-            background-color: #1DB954;
-            border-radius: 50%;
+        .sayfa-baslik-alani p {
+            color: #888; 
+            font-size: 1.1rem; 
+            margin-top: 10px;
+        }
+
+        /* --- FİLTRELEME BUTONLARI --- */
+        .filtre-kapsayici {
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-shrink: 0;
-            box-shadow: 0 0 15px rgba(30, 215, 96, 0.4);
-            animation: nefesAl 2s infinite alternate;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 5;
         }
 
-        @keyframes nefesAl {
-            0% { transform: scale(0.95); box-shadow: 0 0 10px rgba(30, 215, 96, 0.3); }
-            100% { transform: scale(1.05); box-shadow: 0 0 25px rgba(30, 215, 96, 0.6); }
-        }
-
-        .spotify-bilgi {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .spotify-durum {
-            font-size: 0.8rem;
-            color: #1DB954;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .filtre-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            color: #ccc;
+            padding: 8px 25px;
+            border-radius: 25px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
             font-weight: 600;
-            margin-bottom: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
         }
 
-        .spotify-sarki {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .spotify-sanatci {
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-
-        /* Ses Dalgaları Animasyonu */
-        .ses-dalgalari {
-            display: flex;
-            align-items: flex-end;
-            gap: 3px;
-            height: 20px;
-            margin-left: auto;
-        }
-        .dalga {
-            width: 4px;
-            background-color: #1DB954;
-            border-radius: 2px;
-            animation: dalgalan 1s ease-in-out infinite;
-        }
-        .dalga:nth-child(1) { animation-delay: 0.0s; height: 10px; }
-        .dalga:nth-child(2) { animation-delay: 0.2s; height: 20px; }
-        .dalga:nth-child(3) { animation-delay: 0.4s; height: 15px; }
-        .dalga:nth-child(4) { animation-delay: 0.6s; height: 8px; }
-
-        @keyframes dalgalan {
-            0%, 100% { transform: scaleY(0.5); }
-            50% { transform: scaleY(1); }
+        /* Butonun üzerine gelince veya tıklanınca */
+        .filtre-btn:hover, .filtre-btn.aktif {
+            background: #FFD700;
+            color: #111;
+            border-color: #FFD700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            transform: translateY(-2px);
         }
 
         /* --- İNCELEME KARTLARI (GRID) --- */
         .inceleme-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
             max-width: 1200px;
             width: 90%;
             margin: 0 auto 100px auto;
+            position: relative;
+            z-index: 5;
         }
 
         .inceleme-kart {
@@ -133,6 +100,11 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Filtreleme sırasında kullanılacak gizleme sınıfı */
+        .inceleme-kart.gizli {
+            display: none;
         }
 
         .inceleme-kart:hover {
@@ -153,6 +125,7 @@
             font-size: 0.75rem;
             letter-spacing: 1px;
             text-transform: uppercase;
+            font-weight: 700;
         }
 
         .inceleme-baslik {
@@ -196,152 +169,114 @@
     <!-- Üst Menü -->
     <div id="navbar-placeholder"></div>
 
-    <!-- Arkaplan Daireleri -->
+    <!-- Arkaplan Daireleri (CSS dosyasından gelir) -->
     <ul class="arkaplan-daireleri">
         <li></li><li></li><li></li><li></li><li></li><li></li>
     </ul>
 
-    <!-- SPOTIFY CANLI DİNLEME ALANI -->
-    <div class="spotify-kapsayici">
-        <div class="spotify-ikon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-        </div>
-        <div class="spotify-bilgi">
-            <span class="spotify-durum">Şu An Dinliyor</span>
-            <!-- JS ile canlı veri çekilene kadar görünecek geçici metin -->
-            <span class="spotify-sarki" id="sarki-adi">The Night We Met</span>
-            <span class="spotify-sanatci" id="sanatci-adi">Lord Huron</span>
-        </div>
-        
-        <div class="ses-dalgalari">
-            <div class="dalga"></div><div class="dalga"></div><div class="dalga"></div><div class="dalga"></div>
-        </div>
+    <!-- SAYFA BAŞLIĞI -->
+    <div class="sayfa-baslik-alani">
+        <h1>İnceleme & Notlar</h1>
+        <p>Oynadığım, izlediğim ve deneyimlediğim şeyler üzerine şahsi düşüncelerim.</p>
     </div>
 
-    <!-- BÖLÜM BAŞLIĞI -->
-    <div style="text-align: center; margin-bottom: 50px; position: relative; z-index: 5;">
-        <h1 style="color: #FFD700; font-size: 2.5rem; letter-spacing: -0.5px; margin:0;">İnceleme & Notlar</h1>
-        <p style="color: #888; font-size: 1.1rem; margin-top: 10px;">Oynadığım, izlediğim ve deneyimlediğim her şey üzerine şahsi düşüncelerim.</p>
+    <!-- FİLTRE BUTONLARI -->
+    <div class="filtre-kapsayici" id="filtre-butonlari">
+        <button class="filtre-btn aktif" data-filtre="hepsi">Tümü</button>
+        <button class="filtre-btn" data-filtre="oyun">Oyun</button>
+        <button class="filtre-btn" data-filtre="dizi">Dizi</button>
+        <button class="filtre-btn" data-filtre="film">Film</button>
+        <button class="filtre-btn" data-filtre="donanim">Donanım</button>
     </div>
 
     <!-- İNCELEME KARTLARI -->
-    <div class="inceleme-grid">
+    <div class="inceleme-grid" id="inceleme-listesi">
         
-        <!-- Kart 1: Oyun -->
-        <div class="inceleme-kart">
+        <!-- Kart: Oyun -->
+        <div class="inceleme-kart" data-kategori="oyun">
             <span class="kategori-etiketi">Oyun</span>
             <h3 class="inceleme-baslik">Ready or Not</h3>
             <div class="inceleme-yildizlar">★★★★☆</div>
             <p class="inceleme-metin">
-                Taktiksel atış mekanikleri ve atmosferi harika. Ancak optimizasyon sorunları ve yapay zekanın bazen duvar arkasından tepki vermesi genel deneyimi biraz baltalayabiliyor. 
+                Taktiksel atış mekanikleri ve CQB (yakın mesafe çatışma) atmosferi harika. Ancak yapay zekanın bazen duvar arkasından insanüstü tepkiler vermesi genel deneyimi biraz baltalayabiliyor.
             </p>
             <a href="#" class="devamini-oku">Tüm Notları Gör →</a>
         </div>
 
-        <!-- Kart 2: Donanım/Teknoloji -->
-        <div class="inceleme-kart">
-            <span class="kategori-etiketi">Donanım</span>
-            <h3 class="inceleme-baslik">ASUS X870 Anakart & Ryzen Uyumları</h3>
+        <!-- Kart: Dizi -->
+        <div class="inceleme-kart" data-kategori="dizi">
+            <span class="kategori-etiketi">Dizi</span>
+            <h3 class="inceleme-baslik">From</h3>
             <div class="inceleme-yildizlar">★★★★★</div>
             <p class="inceleme-metin">
-                AM5 soketindeki yeni nesil anakartların PCIe yolları ve yüksek frekans bellek destekleri, sistem toplamayı düşünenler için sunduğu bant genişliği ile çok cezbedici duruyor.
+                Gizem ve gerilimi inanılmaz iyi harmanlıyor. Girdiğin kasabadan çıkamama hissi ve gece çöktüğünde başlayan o tekinsiz atmosfer izleyiciyi tamamen ekrana kilitliyor.
             </p>
             <a href="#" class="devamini-oku">Tüm Notları Gör →</a>
         </div>
 
-        <!-- Kart 3: Film/Dizi -->
-        <div class="inceleme-kart">
+        <!-- Kart: Film -->
+        <div class="inceleme-kart" data-kategori="film">
             <span class="kategori-etiketi">Film</span>
-            <h3 class="inceleme-baslik">28 Days Later (28 Gün Sonra)</h3>
+            <h3 class="inceleme-baslik">28 Days Later</h3>
             <div class="inceleme-yildizlar">★★★★☆</div>
             <p class="inceleme-metin">
-                Dijital kameralarla çekilmiş olmasının verdiği o gergin, belgeselvari hava post-apokaliptik bir Londra ile birleşince türünün en kült örneklerinden birini ortaya çıkarmış.
+                Dijital kameralarla çekilmiş olmasının verdiği o gergin, belgeselvari hava post-apokaliptik bir Londra ile birleşince zombi türünün en kült örneklerinden birini ortaya çıkarmış.
             </p>
             <a href="#" class="devamini-oku">Tüm Notları Gör →</a>
         </div>
 
-        <!-- Kart 4: Edebiyat/Kitap (Yeni Ufuklar) -->
-        <div class="inceleme-kart">
-            <span class="kategori-etiketi">Kitap</span>
-            <h3 class="inceleme-baslik">Zamanın Kısa Tarihi</h3>
+        <!-- Kart: Donanım -->
+        <div class="inceleme-kart" data-kategori="donanim">
+            <span class="kategori-etiketi">Donanım</span>
+            <h3 class="inceleme-baslik">ASUS X870 & AM5 Mimarisi</h3>
             <div class="inceleme-yildizlar">★★★★★</div>
             <p class="inceleme-metin">
-                Evrenin işleyişi hakkında karmaşık fizik kurallarını bu kadar anlaşılır bir dille ifade edebilmek... Stephen Hawking'in vizyonunu anlamak için mükemmel bir başlangıç.
+                Yeni nesil X870 anakartların PCIe 5.0 yolları ve yüksek frekanslı bellek destekleri, sistem toplamayı düşünenler için sunduğu bant genişliği ile oldukça cezbedici duruyor.
             </p>
             <a href="#" class="devamini-oku">Tüm Notları Gör →</a>
         </div>
+
+        <!-- İleride eklemek istediğin yeni kartları tam buraya yapıştıracaksın -->
 
     </div>
 
-
+    <!-- SCRIPTLER -->
     <script>
-        // Navbar Yükleme (Önceki kodun)
+        // 1. Navbar Yükleme
         fetch('navbar.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('navbar-placeholder').innerHTML = data;
             });
 
-        // --- CANLI SPOTIFY (LANYARD API) ---
-        // BURAYA KENDİ DISCORD ID'Nİ YAZMALISIN (Tırnak işaretlerini silme!)
-        const discordID = "SENIN_DISCORD_ID_BURAYA"; 
-        
-        const sarkiAdi = document.getElementById('sarki-adi');
-        const sanatciAdi = document.getElementById('sanatci-adi');
-        const durumYazisi = document.querySelector('.spotify-durum');
-        const sesDalgalari = document.querySelector('.ses-dalgalari');
-        const ikon = document.querySelector('.spotify-ikon');
+        // 2. Filtreleme Sistemi (JavaScript Mantığı)
+        const filtreButonlari = document.querySelectorAll('.filtre-btn');
+        const incelemeKartlari = document.querySelectorAll('.inceleme-kart');
 
-        // Lanyard'dan veriyi çeken fonksiyon
-        async function spotifyGuncelle() {
-            try {
-                const response = await fetch(`f6cf6e3b536c43ebaa02ef5e762cb116/${discordID}`);
-                const veri = await response.json();
+        filtreButonlari.forEach(buton => {
+            buton.addEventListener('click', function() {
+                // Tıklanan butonun aktifliğini ayarla
+                filtreButonlari.forEach(b => b.classList.remove('aktif'));
+                this.classList.add('aktif');
 
-                if (veri.success && veri.data.spotify) {
-                    // Şarkı dinliyorsa
-                    const spotify = veri.data.spotify;
-                    
-                    sarkiAdi.textContent = spotify.song;
-                    sanatciAdi.textContent = spotify.artist;
-                    durumYazisi.textContent = "Şu An Dinliyor";
-                    durumYazisi.style.color = "#1DB954";
-                    
-                    sesDalgalari.style.display = "flex"; // Animasyonu göster
-                    ikon.style.animation = "nefesAl 2s infinite alternate"; // İkon parlasın
-                    
-                } else {
-                    // Dinlemiyorsa
-                    sarkiAdi.textContent = "Sessizlik...";
-                    sanatciAdi.textContent = "Şu an herhangi bir müzik çalmıyor.";
-                    durumYazisi.textContent = "Çevrimdışı";
-                    durumYazisi.style.color = "#888";
-                    
-                    sesDalgalari.style.display = "none"; // Animasyonu gizle
-                    ikon.style.animation = "none"; // İkonu sabitle
-                    ikon.style.boxShadow = "none";
-                }
-            } catch (error) {
-                console.error("Spotify verisi çekilemedi:", error);
-                sarkiAdi.textContent = "Bağlantı Hatası";
-                sanatciAdi.textContent = "Veri alınamıyor.";
-            }
-        }
+                // Butondaki data-filtre değerini al (örn: 'oyun', 'film', 'hepsi')
+                const secilenFiltre = this.getAttribute('data-filtre');
 
-        // Sayfa açıldığında veriyi çek
-        spotifyGuncelle();
-        
-        // Her 10 saniyede bir veriyi otomatik güncelle (sayfayı yenilemeye gerek kalmadan)
-        setInterval(spotifyGuncelle, 10000);
-    </script>
-    
-    <script>
-        // Navbar Yükleme
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-placeholder').innerHTML = data;
+                // Bütün kartları tek tek kontrol et
+                incelemeKartlari.forEach(kart => {
+                    // Kartın kategorisini al
+                    const kartKategorisi = kart.getAttribute('data-kategori');
+
+                    // Eğer seçilen filtre 'hepsi' ise veya kartın kategorisiyle eşleşiyorsa göster
+                    if (secilenFiltre === 'hepsi' || secilenFiltre === kartKategorisi) {
+                        kart.classList.remove('gizli');
+                    } else {
+                        // Eşleşmiyorsa kartı gizle
+                        kart.classList.add('gizli');
+                    }
+                });
             });
+        });
     </script>
 
 </body>
