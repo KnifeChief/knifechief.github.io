@@ -288,14 +288,20 @@
               ],
               kabaklar: [ { x: 700, y: 50 }, { x: 50, y: 400 }, { x: 700, y: 400 } ]
             },
-            // Level 5: Köşe Kapmaca
-            { baslangic: { x: 380, y: 220 }, bitis: { x: 380, y: 50, w: 40, h: 40 },
-              kapi: { x: 380, y: 50, w: 40, h: 40 },
-              duvarlar: [ { x: 250, y: 150, w: 300, h: 20 }, { x: 250, y: 300, w: 300, h: 20 }, { x: 250, y: 150, w: 20, h: 170 }, { x: 530, y: 150, w: 20, h: 170 } ],
-              dusmanlar: [
-                  { x: 100, y: 100, boyut: 24, hizX: 4, hizY: 4, sinirMinX: 50, sinirMaxX: 750, sinirMinY: 50, sinirMaxY: 450 }
+           // Level 5: Ölümcül Spiral
+            { baslangic: { x: 50, y: 50 }, bitis: { x: 380, y: 250, w: 50, h: 50 },
+              kapi: { x: 380, y: 250, w: 50, h: 50 },
+              duvarlar: [ 
+                  { x: 150, y: 150, w: 500, h: 20 }, // Üst duvar
+                  { x: 150, y: 150, w: 20, h: 200 }, // Sol duvar
+                  { x: 150, y: 350, w: 500, h: 20 }, // Alt duvar
+                  { x: 630, y: 220, w: 20, h: 150 }  // Sağ iç kilit duvarı
               ],
-              kabaklar: [ { x: 50, y: 50 }, { x: 700, y: 400 }, { x: 50, y: 400 } ]
+              dusmanlar: [
+                  { x: 250, y: 200, boyut: 24, hizX: 5, hizY: 0, sinirMinX: 200, sinirMaxX: 600 },
+                  { x: 400, y: 300, boyut: 24, hizX: -6, hizY: 0, sinirMinX: 200, sinirMaxX: 600 }
+              ],
+              kabaklar: [ { x: 700, y: 50 }, { x: 700, y: 400 }, { x: 200, y: 250 } ]
             },
             // Level 6: Çapraz Çılgınlık
             { baslangic: { x: 50, y: 400 }, bitis: { x: 700, y: 50, w: 50, h: 50 },
@@ -317,15 +323,22 @@
               ],
               kabaklar: [ { x: 225, y: 50 }, { x: 375, y: 450 }, { x: 700, y: 50 } ]
             },
-            // Level 8: Hız Tuzağı (DUVAR İÇİNDE DOĞMA HATASI ÇÖZÜLDÜ)
-            { baslangic: { x: 50, y: 250 }, bitis: { x: 700, y: 250, w: 50, h: 50 },
-              kapi: { x: 700, y: 250, w: 50, h: 50 },
-              duvarlar: [ { x: 350, y: 200, w: 100, h: 100 } ], 
+            // Level 8: Çapraz Ateş
+            { baslangic: { x: 50, y: 50 }, bitis: { x: 700, y: 400, w: 50, h: 50 },
+              kapi: { x: 700, y: 400, w: 50, h: 50 },
+              duvarlar: [ 
+                  { x: 200, y: 0, w: 40, h: 150 }, 
+                  { x: 200, y: 350, w: 40, h: 150 },
+                  { x: 500, y: 0, w: 40, h: 150 },
+                  { x: 500, y: 350, w: 40, h: 150 },
+                  { x: 300, y: 230, w: 200, h: 40 } // Ortadaki güvenli ada
+              ], 
               dusmanlar: [
-                  { x: 100, y: 100, boyut: 24, hizX: 12, hizY: 0, sinirMinX: 0, sinirMaxX: 800 },
-                  { x: 100, y: 400, boyut: 24, hizX: 12, hizY: 0, sinirMinX: 0, sinirMaxX: 800 }
+                  { x: 100, y: 250, boyut: 24, hizX: 12, hizY: 0, sinirMinX: 0, sinirMaxX: 800 }, // Çok hızlı yatay kesici
+                  { x: 350, y: 50, boyut: 24, hizX: 0, hizY: 9, sinirMinY: 0, sinirMaxY: 500 },  // Dikey 1
+                  { x: 450, y: 450, boyut: 24, hizX: 0, hizY: -9, sinirMinY: 0, sinirMaxY: 500 } // Dikey 2
               ],
-              kabaklar: [ { x: 50, y: 50 }, { x: 50, y: 450 }, { x: 750, y: 50 } ]
+              kabaklar: [ { x: 50, y: 400 }, { x: 380, y: 50 }, { x: 700, y: 50 } ]
             },
             // Level 9: Keskin Nişancı
             { baslangic: { x: 50, y: 250 }, bitis: { x: 700, y: 250, w: 50, h: 50 },
