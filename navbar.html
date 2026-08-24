@@ -71,11 +71,17 @@
             if (response.status === 200) {
                 const data = await response.json();
                 if (data && data.item) {
+                    console.log("🎵 Şarkı bulundu:", data.item.name);
                     spotifyModul.style.display = "flex"; // Logoyu göster
                     document.getElementById("nav-sarki").textContent = data.item.name;
                     document.getElementById("nav-sanatci").textContent = data.item.artists.map(a => a.name).join(", ");
                 }
-            } else {
+                else if (response.status === 204) {
+                console.log("⏸️ Şu an şarkı çalmıyor (204 Kodu). Modül gizlendi.");
+                if(spotifyModul) spotifyModul.style.display = "none";
+            } 
+                else {
+                console.log("⚠️ Bilinmeyen durum:", response.status);
                 // Şarkı durmuşsa veya reklam girmişse modülü tamamen gizle
                 spotifyModul.style.display = "none";
             }
